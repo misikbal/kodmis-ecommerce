@@ -1,0 +1,179 @@
+{
+  "id": "jewelry",
+  "name": "Takı & Aksesuar",
+  "description": "Lüks takı ve aksesuarlar için altın tonları ve yüksek kontrast",
+  "category": "luxury",
+  "preview": "/themes/jewelry-preview.jpg",
+  "colors": {
+    "primary": "#FFD700",
+    "primaryDark": "#B8860B",
+    "secondary": "#000000",
+    "secondaryDark": "#1A1A1A",
+    "accent": "#C0C0C0",
+    "accentDark": "#808080",
+    "background": "#FFFFFF",
+    "backgroundDark": "#0A0A0A",
+    "surface": "#FAFAFA",
+    "surfaceDark": "#1A1A1A",
+    "text": "#000000",
+    "textDark": "#FFFFFF",
+    "textSecondary": "#666666",
+    "textSecondaryDark": "#CCCCCC",
+    "border": "#E5E5E5",
+    "borderDark": "#333333",
+    "success": "#4CAF50",
+    "warning": "#FF9800",
+    "error": "#F44336",
+    "info": "#2196F3"
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": "Cormorant Garamond, serif",
+      "secondary": "Playfair Display, serif",
+      "display": "Cormorant Garamond, serif"
+    },
+    "fontSize": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem"
+    },
+    "fontWeight": {
+      "light": "300",
+      "normal": "400",
+      "medium": "500",
+      "semibold": "600",
+      "bold": "700",
+      "extrabold": "800"
+    },
+    "letterSpacing": {
+      "tight": "-0.025em",
+      "normal": "0",
+      "wide": "0.025em",
+      "wider": "0.05em"
+    }
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem",
+    "2xl": "3rem",
+    "3xl": "4rem"
+  },
+  "borderRadius": {
+    "none": "0",
+    "sm": "0.25rem",
+    "md": "0.5rem",
+    "lg": "0.75rem",
+    "xl": "1rem",
+    "2xl": "1.5rem",
+    "full": "9999px"
+  },
+  "shadows": {
+    "sm": "0 2px 4px 0 rgba(255, 215, 0, 0.1)",
+    "md": "0 4px 8px -2px rgba(255, 215, 0, 0.1), 0 2px 4px -2px rgba(255, 215, 0, 0.06)",
+    "lg": "0 8px 16px -4px rgba(255, 215, 0, 0.1), 0 4px 8px -4px rgba(255, 215, 0, 0.05)",
+    "xl": "0 16px 24px -8px rgba(255, 215, 0, 0.1), 0 8px 16px -8px rgba(255, 215, 0, 0.04)",
+    "luxury": "0 12px 24px 0 rgba(255, 215, 0, 0.2)"
+  },
+  "animations": {
+    "duration": {
+      "fast": "200ms",
+      "normal": "300ms",
+      "slow": "400ms"
+    },
+    "easing": {
+      "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "easeOut": "cubic-bezier(0, 0, 0.2, 1)",
+      "easeIn": "cubic-bezier(0.4, 0, 1, 1)"
+    }
+  },
+  "components": {
+    "button": {
+      "primary": {
+        "background": "linear-gradient(135deg, #FFD700 0%, #B8860B 100%)",
+        "color": "#000000",
+        "border": "none",
+        "borderRadius": "0.5rem",
+        "padding": "1rem 2rem",
+        "fontWeight": "600",
+        "boxShadow": "0 4px 16px 0 rgba(255, 215, 0, 0.3)",
+        "hover": {
+          "transform": "scale(1.05)",
+          "boxShadow": "0 8px 24px 0 rgba(255, 215, 0, 0.4)"
+        }
+      },
+      "secondary": {
+        "background": "transparent",
+        "color": "#FFD700",
+        "border": "2px solid #FFD700",
+        "borderRadius": "0.5rem",
+        "padding": "1rem 2rem",
+        "fontWeight": "600",
+        "hover": {
+          "background": "#FFD700",
+          "color": "#000000"
+        }
+      }
+    },
+    "card": {
+      "background": "#FFFFFF",
+      "border": "1px solid #E5E5E5",
+      "borderRadius": "1rem",
+      "boxShadow": "0 12px 24px 0 rgba(255, 215, 0, 0.2)",
+      "padding": "2rem",
+      "hover": {
+        "transform": "translateY(-6px)",
+        "boxShadow": "0 20px 40px 0 rgba(255, 215, 0, 0.25)"
+      }
+    },
+    "input": {
+      "background": "#FFFFFF",
+      "border": "2px solid #E5E5E5",
+      "borderRadius": "0.75rem",
+      "padding": "1rem 1.5rem",
+      "focus": {
+        "borderColor": "#FFD700",
+        "boxShadow": "0 0 0 3px rgba(255, 215, 0, 0.1)"
+      }
+    }
+  },
+  "layout": {
+    "header": {
+      "background": "#FFFFFF",
+      "borderBottom": "1px solid #E5E5E5",
+      "height": "5rem",
+      "logo": {
+        "fontFamily": "Cormorant Garamond",
+        "fontSize": "1.75rem",
+        "fontWeight": "700",
+        "color": "#FFD700"
+      }
+    },
+    "sidebar": {
+      "background": "#FAFAFA",
+      "borderRight": "1px solid #E5E5E5",
+      "width": "18rem"
+    },
+    "footer": {
+      "background": "#0A0A0A",
+      "color": "#FFFFFF",
+      "padding": "4rem 0"
+    }
+  },
+  "features": {
+    "luxuryDesign": true,
+    "highContrast": true,
+    "elegantTypography": true,
+    "jewelryIcons": true,
+    "darkMode": true,
+    "animations": true
+  }
+}

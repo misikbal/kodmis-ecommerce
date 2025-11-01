@@ -1,0 +1,179 @@
+{
+  "id": "toys",
+  "name": "Oyuncak & Çocuk Ürünleri",
+  "description": "Çocuk ürünleri için renkli ve eğlenceli tasarım",
+  "category": "children",
+  "preview": "/themes/toys-preview.jpg",
+  "colors": {
+    "primary": "#FF9800",
+    "primaryDark": "#F57C00",
+    "secondary": "#FFEB3B",
+    "secondaryDark": "#FBC02D",
+    "accent": "#2196F3",
+    "accentDark": "#1976D2",
+    "background": "#FFFDE7",
+    "backgroundDark": "#2A2A1A",
+    "surface": "#FFFFFF",
+    "surfaceDark": "#3A3A2A",
+    "text": "#2A2A1A",
+    "textDark": "#FFFDE7",
+    "textSecondary": "#FF9800",
+    "textSecondaryDark": "#FFB74D",
+    "border": "#FFE0B2",
+    "borderDark": "#5A5A4A",
+    "success": "#4CAF50",
+    "warning": "#FF9800",
+    "error": "#F44336",
+    "info": "#2196F3"
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": "Nunito, sans-serif",
+      "secondary": "Comic Neue, cursive",
+      "display": "Nunito, sans-serif"
+    },
+    "fontSize": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem"
+    },
+    "fontWeight": {
+      "light": "300",
+      "normal": "400",
+      "medium": "500",
+      "semibold": "600",
+      "bold": "700",
+      "extrabold": "800"
+    },
+    "letterSpacing": {
+      "tight": "-0.025em",
+      "normal": "0",
+      "wide": "0.025em",
+      "wider": "0.05em"
+    }
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem",
+    "2xl": "3rem",
+    "3xl": "4rem"
+  },
+  "borderRadius": {
+    "none": "0",
+    "sm": "0.5rem",
+    "md": "0.75rem",
+    "lg": "1rem",
+    "xl": "1.25rem",
+    "2xl": "1.75rem",
+    "full": "9999px"
+  },
+  "shadows": {
+    "sm": "0 2px 4px 0 rgba(255, 152, 0, 0.1)",
+    "md": "0 4px 8px -2px rgba(255, 152, 0, 0.1), 0 2px 4px -2px rgba(255, 152, 0, 0.06)",
+    "lg": "0 8px 16px -4px rgba(255, 152, 0, 0.1), 0 4px 8px -4px rgba(255, 152, 0, 0.05)",
+    "xl": "0 16px 24px -8px rgba(255, 152, 0, 0.1), 0 8px 16px -8px rgba(255, 152, 0, 0.04)",
+    "playful": "0 12px 24px 0 rgba(255, 152, 0, 0.2)"
+  },
+  "animations": {
+    "duration": {
+      "fast": "200ms",
+      "normal": "300ms",
+      "slow": "400ms"
+    },
+    "easing": {
+      "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "easeOut": "cubic-bezier(0, 0, 0.2, 1)",
+      "easeIn": "cubic-bezier(0.4, 0, 1, 1)"
+    }
+  },
+  "components": {
+    "button": {
+      "primary": {
+        "background": "linear-gradient(135deg, #FF9800 0%, #F57C00 100%)",
+        "color": "#FFFFFF",
+        "border": "none",
+        "borderRadius": "1.5rem",
+        "padding": "1rem 2rem",
+        "fontWeight": "600",
+        "boxShadow": "0 4px 16px 0 rgba(255, 152, 0, 0.3)",
+        "hover": {
+          "transform": "scale(1.1) rotate(2deg)",
+          "boxShadow": "0 8px 24px 0 rgba(255, 152, 0, 0.4)"
+        }
+      },
+      "secondary": {
+        "background": "transparent",
+        "color": "#FF9800",
+        "border": "3px solid #FF9800",
+        "borderRadius": "1.5rem",
+        "padding": "1rem 2rem",
+        "fontWeight": "600",
+        "hover": {
+          "background": "#FF9800",
+          "color": "#FFFFFF"
+        }
+      }
+    },
+    "card": {
+      "background": "#FFFFFF",
+      "border": "2px solid #FFE0B2",
+      "borderRadius": "2rem",
+      "boxShadow": "0 12px 24px 0 rgba(255, 152, 0, 0.2)",
+      "padding": "2rem",
+      "hover": {
+        "transform": "translateY(-8px) scale(1.02)",
+        "boxShadow": "0 20px 40px 0 rgba(255, 152, 0, 0.25)"
+      }
+    },
+    "input": {
+      "background": "#FFFFFF",
+      "border": "3px solid #FFE0B2",
+      "borderRadius": "1.25rem",
+      "padding": "1rem 1.5rem",
+      "focus": {
+        "borderColor": "#FF9800",
+        "boxShadow": "0 0 0 3px rgba(255, 152, 0, 0.1)"
+      }
+    }
+  },
+  "layout": {
+    "header": {
+      "background": "#FFFFFF",
+      "borderBottom": "2px solid #FFE0B2",
+      "height": "5rem",
+      "logo": {
+        "fontFamily": "Nunito",
+        "fontSize": "1.5rem",
+        "fontWeight": "700",
+        "color": "#FF9800"
+      }
+    },
+    "sidebar": {
+      "background": "#FFFDE7",
+      "borderRight": "2px solid #FFE0B2",
+      "width": "18rem"
+    },
+    "footer": {
+      "background": "#2A2A1A",
+      "color": "#FFFDE7",
+      "padding": "4rem 0"
+    }
+  },
+  "features": {
+    "colorfulDesign": true,
+    "playfulAnimations": true,
+    "roundedCorners": true,
+    "toyIcons": true,
+    "darkMode": true,
+    "animations": true
+  }
+}

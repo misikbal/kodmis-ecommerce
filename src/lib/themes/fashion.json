@@ -1,0 +1,179 @@
+{
+  "id": "fashion",
+  "name": "Moda & Tekstil",
+  "description": "Zarif ve şık moda ürünleri için pastel renkler ve ince hatlı tasarım",
+  "category": "fashion",
+  "preview": "/themes/fashion-preview.jpg",
+  "colors": {
+    "primary": "#E91E63",
+    "primaryDark": "#C2185B",
+    "secondary": "#F8BBD9",
+    "secondaryDark": "#F48FB1",
+    "accent": "#FFC107",
+    "accentDark": "#FF8F00",
+    "background": "#FFF8F5",
+    "backgroundDark": "#2D1B1B",
+    "surface": "#FFFFFF",
+    "surfaceDark": "#3D2B2B",
+    "text": "#2D1B1B",
+    "textDark": "#FFF8F5",
+    "textSecondary": "#8D6E63",
+    "textSecondaryDark": "#BCAAA4",
+    "border": "#F5E6E0",
+    "borderDark": "#5D4037",
+    "success": "#4CAF50",
+    "warning": "#FF9800",
+    "error": "#F44336",
+    "info": "#2196F3"
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": "Playfair Display, serif",
+      "secondary": "Lora, serif",
+      "display": "Playfair Display, serif"
+    },
+    "fontSize": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem"
+    },
+    "fontWeight": {
+      "light": "300",
+      "normal": "400",
+      "medium": "500",
+      "semibold": "600",
+      "bold": "700",
+      "extrabold": "800"
+    },
+    "letterSpacing": {
+      "tight": "-0.025em",
+      "normal": "0",
+      "wide": "0.025em",
+      "wider": "0.05em"
+    }
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem",
+    "2xl": "3rem",
+    "3xl": "4rem"
+  },
+  "borderRadius": {
+    "none": "0",
+    "sm": "0.25rem",
+    "md": "0.5rem",
+    "lg": "0.75rem",
+    "xl": "1rem",
+    "2xl": "1.5rem",
+    "full": "9999px"
+  },
+  "shadows": {
+    "sm": "0 1px 3px 0 rgba(233, 30, 99, 0.1)",
+    "md": "0 4px 6px -1px rgba(233, 30, 99, 0.1), 0 2px 4px -1px rgba(233, 30, 99, 0.06)",
+    "lg": "0 10px 15px -3px rgba(233, 30, 99, 0.1), 0 4px 6px -2px rgba(233, 30, 99, 0.05)",
+    "xl": "0 20px 25px -5px rgba(233, 30, 99, 0.1), 0 10px 10px -5px rgba(233, 30, 99, 0.04)",
+    "soft": "0 8px 32px 0 rgba(233, 30, 99, 0.12)"
+  },
+  "animations": {
+    "duration": {
+      "fast": "200ms",
+      "normal": "400ms",
+      "slow": "600ms"
+    },
+    "easing": {
+      "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "easeOut": "cubic-bezier(0, 0, 0.2, 1)",
+      "easeIn": "cubic-bezier(0.4, 0, 1, 1)"
+    }
+  },
+  "components": {
+    "button": {
+      "primary": {
+        "background": "linear-gradient(135deg, #E91E63 0%, #C2185B 100%)",
+        "color": "#FFFFFF",
+        "border": "none",
+        "borderRadius": "2rem",
+        "padding": "0.875rem 2rem",
+        "fontWeight": "500",
+        "boxShadow": "0 4px 14px 0 rgba(233, 30, 99, 0.3)",
+        "hover": {
+          "transform": "scale(1.05)",
+          "boxShadow": "0 8px 25px 0 rgba(233, 30, 99, 0.4)"
+        }
+      },
+      "secondary": {
+        "background": "transparent",
+        "color": "#E91E63",
+        "border": "2px solid #E91E63",
+        "borderRadius": "2rem",
+        "padding": "0.875rem 2rem",
+        "fontWeight": "500",
+        "hover": {
+          "background": "#E91E63",
+          "color": "#FFFFFF"
+        }
+      }
+    },
+    "card": {
+      "background": "#FFFFFF",
+      "border": "1px solid #F5E6E0",
+      "borderRadius": "1.5rem",
+      "boxShadow": "0 8px 32px 0 rgba(233, 30, 99, 0.12)",
+      "padding": "1.5rem",
+      "hover": {
+        "transform": "translateY(-8px)",
+        "boxShadow": "0 20px 40px 0 rgba(233, 30, 99, 0.15)"
+      }
+    },
+    "input": {
+      "background": "#FFFFFF",
+      "border": "2px solid #F5E6E0",
+      "borderRadius": "1rem",
+      "padding": "0.875rem 1.25rem",
+      "focus": {
+        "borderColor": "#E91E63",
+        "boxShadow": "0 0 0 3px rgba(233, 30, 99, 0.1)"
+      }
+    }
+  },
+  "layout": {
+    "header": {
+      "background": "#FFFFFF",
+      "borderBottom": "1px solid #F5E6E0",
+      "height": "5rem",
+      "logo": {
+        "fontFamily": "Playfair Display",
+        "fontSize": "1.75rem",
+        "fontWeight": "700",
+        "color": "#E91E63"
+      }
+    },
+    "sidebar": {
+      "background": "#FFF8F5",
+      "borderRight": "1px solid #F5E6E0",
+      "width": "18rem"
+    },
+    "footer": {
+      "background": "#2D1B1B",
+      "color": "#FFF8F5",
+      "padding": "4rem 0"
+    }
+  },
+  "features": {
+    "elegantTypography": true,
+    "softShadows": true,
+    "roundedCorners": true,
+    "fashionIcons": true,
+    "darkMode": true,
+    "animations": true
+  }
+}

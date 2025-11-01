@@ -1,0 +1,179 @@
+{
+  "id": "electronics",
+  "name": "Elektronik & Bilgisayar",
+  "description": "Elektronik ürünler için sade tasarım ve güçlü kontrastlar",
+  "category": "electronics",
+  "preview": "/themes/electronics-preview.jpg",
+  "colors": {
+    "primary": "#FF5722",
+    "primaryDark": "#D84315",
+    "secondary": "#424242",
+    "secondaryDark": "#212121",
+    "accent": "#FFC107",
+    "accentDark": "#FF8F00",
+    "background": "#FAFAFA",
+    "backgroundDark": "#121212",
+    "surface": "#FFFFFF",
+    "surfaceDark": "#1E1E1E",
+    "text": "#212121",
+    "textDark": "#FFFFFF",
+    "textSecondary": "#757575",
+    "textSecondaryDark": "#BDBDBD",
+    "border": "#E0E0E0",
+    "borderDark": "#424242",
+    "success": "#4CAF50",
+    "warning": "#FF9800",
+    "error": "#F44336",
+    "info": "#2196F3"
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": "Montserrat, sans-serif",
+      "secondary": "Roboto, sans-serif",
+      "display": "Montserrat, sans-serif"
+    },
+    "fontSize": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem"
+    },
+    "fontWeight": {
+      "light": "300",
+      "normal": "400",
+      "medium": "500",
+      "semibold": "600",
+      "bold": "700",
+      "extrabold": "800"
+    },
+    "letterSpacing": {
+      "tight": "-0.025em",
+      "normal": "0",
+      "wide": "0.025em",
+      "wider": "0.05em"
+    }
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem",
+    "2xl": "3rem",
+    "3xl": "4rem"
+  },
+  "borderRadius": {
+    "none": "0",
+    "sm": "0.25rem",
+    "md": "0.375rem",
+    "lg": "0.5rem",
+    "xl": "0.75rem",
+    "2xl": "1rem",
+    "full": "9999px"
+  },
+  "shadows": {
+    "sm": "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+    "md": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+    "lg": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+    "xl": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+    "sharp": "0 8px 16px 0 rgba(0, 0, 0, 0.15)"
+  },
+  "animations": {
+    "duration": {
+      "fast": "150ms",
+      "normal": "250ms",
+      "slow": "350ms"
+    },
+    "easing": {
+      "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "easeOut": "cubic-bezier(0, 0, 0.2, 1)",
+      "easeIn": "cubic-bezier(0.4, 0, 1, 1)"
+    }
+  },
+  "components": {
+    "button": {
+      "primary": {
+        "background": "linear-gradient(135deg, #FF5722 0%, #D84315 100%)",
+        "color": "#FFFFFF",
+        "border": "none",
+        "borderRadius": "0.375rem",
+        "padding": "0.75rem 1.5rem",
+        "fontWeight": "600",
+        "boxShadow": "0 4px 12px 0 rgba(255, 87, 34, 0.3)",
+        "hover": {
+          "transform": "translateY(-1px)",
+          "boxShadow": "0 6px 20px 0 rgba(255, 87, 34, 0.4)"
+        }
+      },
+      "secondary": {
+        "background": "transparent",
+        "color": "#FF5722",
+        "border": "2px solid #FF5722",
+        "borderRadius": "0.375rem",
+        "padding": "0.75rem 1.5rem",
+        "fontWeight": "600",
+        "hover": {
+          "background": "#FF5722",
+          "color": "#FFFFFF"
+        }
+      }
+    },
+    "card": {
+      "background": "#FFFFFF",
+      "border": "1px solid #E0E0E0",
+      "borderRadius": "0.75rem",
+      "boxShadow": "0 8px 16px 0 rgba(0, 0, 0, 0.15)",
+      "padding": "1.5rem",
+      "hover": {
+        "transform": "translateY(-2px)",
+        "boxShadow": "0 12px 24px 0 rgba(0, 0, 0, 0.2)"
+      }
+    },
+    "input": {
+      "background": "#FFFFFF",
+      "border": "2px solid #E0E0E0",
+      "borderRadius": "0.5rem",
+      "padding": "0.75rem 1rem",
+      "focus": {
+        "borderColor": "#FF5722",
+        "boxShadow": "0 0 0 3px rgba(255, 87, 34, 0.1)"
+      }
+    }
+  },
+  "layout": {
+    "header": {
+      "background": "#FFFFFF",
+      "borderBottom": "1px solid #E0E0E0",
+      "height": "4rem",
+      "logo": {
+        "fontFamily": "Montserrat",
+        "fontSize": "1.5rem",
+        "fontWeight": "700",
+        "color": "#FF5722"
+      }
+    },
+    "sidebar": {
+      "background": "#FAFAFA",
+      "borderRight": "1px solid #E0E0E0",
+      "width": "16rem"
+    },
+    "footer": {
+      "background": "#121212",
+      "color": "#FFFFFF",
+      "padding": "3rem 0"
+    }
+  },
+  "features": {
+    "sharpDesign": true,
+    "strongContrast": true,
+    "minimalIcons": true,
+    "techIcons": true,
+    "darkMode": true,
+    "animations": true
+  }
+}

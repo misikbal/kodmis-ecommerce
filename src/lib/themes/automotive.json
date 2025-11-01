@@ -1,0 +1,179 @@
+{
+    "id": "automotive",
+    "name": "Otomotiv & Sanayi",
+    "description": "Otomotiv ve sanayi ürünleri için güçlü ve köşeli tasarım",
+    "category": "automotive",
+    "preview": "/themes/automotive-preview.jpg",
+    "colors": {
+      "primary": "#424242",
+      "primaryDark": "#212121",
+      "secondary": "#F44336",
+      "secondaryDark": "#D32F2F",
+      "accent": "#FFC107",
+      "accentDark": "#FF8F00",
+      "background": "#FAFAFA",
+      "backgroundDark": "#0A0A0A",
+      "surface": "#FFFFFF",
+      "surfaceDark": "#1A1A1A",
+      "text": "#212121",
+      "textDark": "#FFFFFF",
+      "textSecondary": "#757575",
+      "textSecondaryDark": "#BDBDBD",
+      "border": "#E0E0E0",
+      "borderDark": "#424242",
+      "success": "#4CAF50",
+      "warning": "#FF9800",
+      "error": "#F44336",
+      "info": "#2196F3"
+    },
+    "typography": {
+      "fontFamily": {
+        "primary": "Oswald, sans-serif",
+        "secondary": "Roboto Condensed, sans-serif",
+        "display": "Oswald, sans-serif"
+      },
+      "fontSize": {
+        "xs": "0.75rem",
+        "sm": "0.875rem",
+        "base": "1rem",
+        "lg": "1.125rem",
+        "xl": "1.25rem",
+        "2xl": "1.5rem",
+        "3xl": "1.875rem",
+        "4xl": "2.25rem",
+        "5xl": "3rem"
+      },
+      "fontWeight": {
+        "light": "300",
+        "normal": "400",
+        "medium": "500",
+        "semibold": "600",
+        "bold": "700",
+        "extrabold": "800"
+      },
+      "letterSpacing": {
+        "tight": "-0.025em",
+        "normal": "0",
+        "wide": "0.025em",
+        "wider": "0.05em"
+      }
+    },
+    "spacing": {
+      "xs": "0.25rem",
+      "sm": "0.5rem",
+      "md": "1rem",
+      "lg": "1.5rem",
+      "xl": "2rem",
+      "2xl": "3rem",
+      "3xl": "4rem"
+    },
+    "borderRadius": {
+      "none": "0",
+      "sm": "0.125rem",
+      "md": "0.25rem",
+      "lg": "0.375rem",
+      "xl": "0.5rem",
+      "2xl": "0.75rem",
+      "full": "9999px"
+    },
+    "shadows": {
+      "sm": "0 1px 3px 0 rgba(0, 0, 0, 0.2)",
+      "md": "0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.1)",
+      "lg": "0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1)",
+      "xl": "0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1)",
+      "industrial": "0 8px 16px 0 rgba(0, 0, 0, 0.25)"
+    },
+    "animations": {
+      "duration": {
+        "fast": "100ms",
+        "normal": "200ms",
+        "slow": "300ms"
+      },
+      "easing": {
+        "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "easeOut": "cubic-bezier(0, 0, 0.2, 1)",
+        "easeIn": "cubic-bezier(0.4, 0, 1, 1)"
+      }
+    },
+    "components": {
+      "button": {
+        "primary": {
+          "background": "linear-gradient(135deg, #424242 0%, #212121 100%)",
+          "color": "#FFFFFF",
+          "border": "none",
+          "borderRadius": "0.25rem",
+          "padding": "0.875rem 1.75rem",
+          "fontWeight": "700",
+          "boxShadow": "0 4px 12px 0 rgba(66, 66, 66, 0.3)",
+          "hover": {
+            "transform": "translateY(-1px)",
+            "boxShadow": "0 6px 20px 0 rgba(66, 66, 66, 0.4)"
+          }
+        },
+        "secondary": {
+          "background": "transparent",
+          "color": "#424242",
+          "border": "2px solid #424242",
+          "borderRadius": "0.25rem",
+          "padding": "0.875rem 1.75rem",
+          "fontWeight": "700",
+          "hover": {
+            "background": "#424242",
+            "color": "#FFFFFF"
+          }
+        }
+      },
+      "card": {
+        "background": "#FFFFFF",
+        "border": "1px solid #E0E0E0",
+        "borderRadius": "0.5rem",
+        "boxShadow": "0 8px 16px 0 rgba(0, 0, 0, 0.25)",
+        "padding": "1.5rem",
+        "hover": {
+          "transform": "translateY(-2px)",
+          "boxShadow": "0 12px 24px 0 rgba(0, 0, 0, 0.3)"
+        }
+      },
+      "input": {
+        "background": "#FFFFFF",
+        "border": "2px solid #E0E0E0",
+        "borderRadius": "0.375rem",
+        "padding": "0.875rem 1.25rem",
+        "focus": {
+          "borderColor": "#424242",
+          "boxShadow": "0 0 0 3px rgba(66, 66, 66, 0.1)"
+        }
+      }
+    },
+    "layout": {
+      "header": {
+        "background": "#FFFFFF",
+        "borderBottom": "2px solid #E0E0E0",
+        "height": "4rem",
+        "logo": {
+          "fontFamily": "Oswald",
+          "fontSize": "1.5rem",
+          "fontWeight": "700",
+          "color": "#424242"
+        }
+      },
+      "sidebar": {
+        "background": "#FAFAFA",
+        "borderRight": "2px solid #E0E0E0",
+        "width": "16rem"
+      },
+      "footer": {
+        "background": "#0A0A0A",
+        "color": "#FFFFFF",
+        "padding": "3rem 0"
+      }
+    },
+    "features": {
+      "angularDesign": true,
+      "strongContrast": true,
+      "industrialLook": true,
+      "automotiveIcons": true,
+      "darkMode": true,
+      "animations": true
+    }
+  }

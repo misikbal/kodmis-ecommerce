@@ -1,0 +1,179 @@
+{
+  "id": "technology",
+  "name": "Teknoloji",
+  "description": "Modern teknoloji ürünleri için keskin kenarlar ve neon efektler",
+  "category": "electronics",
+  "preview": "/themes/technology-preview.jpg",
+  "colors": {
+    "primary": "#00D4FF",
+    "primaryDark": "#0099CC",
+    "secondary": "#1A1A1A",
+    "secondaryDark": "#0D0D0D",
+    "accent": "#FF6B35",
+    "accentDark": "#E55A2B",
+    "background": "#FFFFFF",
+    "backgroundDark": "#0A0A0A",
+    "surface": "#F8FAFC",
+    "surfaceDark": "#1A1A1A",
+    "text": "#1A1A1A",
+    "textDark": "#FFFFFF",
+    "textSecondary": "#6B7280",
+    "textSecondaryDark": "#9CA3AF",
+    "border": "#E5E7EB",
+    "borderDark": "#374151",
+    "success": "#10B981",
+    "warning": "#F59E0B",
+    "error": "#EF4444",
+    "info": "#3B82F6"
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": "Inter, system-ui, sans-serif",
+      "secondary": "JetBrains Mono, monospace",
+      "display": "Poppins, sans-serif"
+    },
+    "fontSize": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem"
+    },
+    "fontWeight": {
+      "light": "300",
+      "normal": "400",
+      "medium": "500",
+      "semibold": "600",
+      "bold": "700",
+      "extrabold": "800"
+    },
+    "letterSpacing": {
+      "tight": "-0.025em",
+      "normal": "0",
+      "wide": "0.025em",
+      "wider": "0.05em"
+    }
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem",
+    "2xl": "3rem",
+    "3xl": "4rem"
+  },
+  "borderRadius": {
+    "none": "0",
+    "sm": "0.25rem",
+    "md": "0.5rem",
+    "lg": "0.75rem",
+    "xl": "1rem",
+    "2xl": "1.5rem",
+    "full": "9999px"
+  },
+  "shadows": {
+    "sm": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+    "md": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+    "lg": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+    "xl": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+    "neon": "0 0 20px rgba(0, 212, 255, 0.5), 0 0 40px rgba(0, 212, 255, 0.3)"
+  },
+  "animations": {
+    "duration": {
+      "fast": "150ms",
+      "normal": "300ms",
+      "slow": "500ms"
+    },
+    "easing": {
+      "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "easeOut": "cubic-bezier(0, 0, 0.2, 1)",
+      "easeIn": "cubic-bezier(0.4, 0, 1, 1)"
+    }
+  },
+  "components": {
+    "button": {
+      "primary": {
+        "background": "linear-gradient(135deg, #00D4FF 0%, #0099CC 100%)",
+        "color": "#FFFFFF",
+        "border": "none",
+        "borderRadius": "0.5rem",
+        "padding": "0.75rem 1.5rem",
+        "fontWeight": "600",
+        "boxShadow": "0 4px 14px 0 rgba(0, 212, 255, 0.3)",
+        "hover": {
+          "transform": "translateY(-2px)",
+          "boxShadow": "0 8px 25px 0 rgba(0, 212, 255, 0.4)"
+        }
+      },
+      "secondary": {
+        "background": "transparent",
+        "color": "#00D4FF",
+        "border": "2px solid #00D4FF",
+        "borderRadius": "0.5rem",
+        "padding": "0.75rem 1.5rem",
+        "fontWeight": "600",
+        "hover": {
+          "background": "#00D4FF",
+          "color": "#FFFFFF"
+        }
+      }
+    },
+    "card": {
+      "background": "#FFFFFF",
+      "border": "1px solid #E5E7EB",
+      "borderRadius": "1rem",
+      "boxShadow": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+      "padding": "1.5rem",
+      "hover": {
+        "transform": "translateY(-4px)",
+        "boxShadow": "0 20px 25px -5px rgba(0, 0, 0, 0.1)"
+      }
+    },
+    "input": {
+      "background": "#FFFFFF",
+      "border": "2px solid #E5E7EB",
+      "borderRadius": "0.5rem",
+      "padding": "0.75rem 1rem",
+      "focus": {
+        "borderColor": "#00D4FF",
+        "boxShadow": "0 0 0 3px rgba(0, 212, 255, 0.1)"
+      }
+    }
+  },
+  "layout": {
+    "header": {
+      "background": "#FFFFFF",
+      "borderBottom": "1px solid #E5E7EB",
+      "height": "4rem",
+      "logo": {
+        "fontFamily": "Poppins",
+        "fontSize": "1.5rem",
+        "fontWeight": "700",
+        "color": "#00D4FF"
+      }
+    },
+    "sidebar": {
+      "background": "#F8FAFC",
+      "borderRight": "1px solid #E5E7EB",
+      "width": "16rem"
+    },
+    "footer": {
+      "background": "#1A1A1A",
+      "color": "#FFFFFF",
+      "padding": "3rem 0"
+    }
+  },
+  "features": {
+    "neonEffects": true,
+    "sharpEdges": true,
+    "gradientButtons": true,
+    "techIcons": true,
+    "darkMode": true,
+    "animations": true
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "id": "cosmetics",
+  "name": "Kozmetik & Kişisel Bakım",
+  "description": "Güzellik ve kişisel bakım ürünleri için yumuşak renkler ve minimal tasarım",
+  "category": "beauty",
+  "preview": "/themes/cosmetics-preview.jpg",
+  "colors": {
+    "primary": "#9C27B0",
+    "primaryDark": "#7B1FA2",
+    "secondary": "#E1BEE7",
+    "secondaryDark": "#CE93D8",
+    "accent": "#FF4081",
+    "accentDark": "#F50057",
+    "background": "#FDF7FF",
+    "backgroundDark": "#2E1A2E",
+    "surface": "#FFFFFF",
+    "surfaceDark": "#3D2A3D",
+    "text": "#2E1A2E",
+    "textDark": "#FDF7FF",
+    "textSecondary": "#8E24AA",
+    "textSecondaryDark": "#BA68C8",
+    "border": "#F3E5F5",
+    "borderDark": "#4A2C4A",
+    "success": "#4CAF50",
+    "warning": "#FF9800",
+    "error": "#F44336",
+    "info": "#2196F3"
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": "Quicksand, sans-serif",
+      "secondary": "Open Sans, sans-serif",
+      "display": "Quicksand, sans-serif"
+    },
+    "fontSize": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem"
+    },
+    "fontWeight": {
+      "light": "300",
+      "normal": "400",
+      "medium": "500",
+      "semibold": "600",
+      "bold": "700",
+      "extrabold": "800"
+    },
+    "letterSpacing": {
+      "tight": "-0.025em",
+      "normal": "0",
+      "wide": "0.025em",
+      "wider": "0.05em"
+    }
+  },
+  "spacing": {
+    "xs": "0.25rem",
+    "sm": "0.5rem",
+    "md": "1rem",
+    "lg": "1.5rem",
+    "xl": "2rem",
+    "2xl": "3rem",
+    "3xl": "4rem"
+  },
+  "borderRadius": {
+    "none": "0",
+    "sm": "0.5rem",
+    "md": "0.75rem",
+    "lg": "1rem",
+    "xl": "1.25rem",
+    "2xl": "1.75rem",
+    "full": "9999px"
+  },
+  "shadows": {
+    "sm": "0 2px 4px 0 rgba(156, 39, 176, 0.1)",
+    "md": "0 4px 8px -2px rgba(156, 39, 176, 0.1), 0 2px 4px -2px rgba(156, 39, 176, 0.06)",
+    "lg": "0 8px 16px -4px rgba(156, 39, 176, 0.1), 0 4px 8px -4px rgba(156, 39, 176, 0.05)",
+    "xl": "0 16px 24px -8px rgba(156, 39, 176, 0.1), 0 8px 16px -8px rgba(156, 39, 176, 0.04)",
+    "soft": "0 12px 24px 0 rgba(156, 39, 176, 0.15)"
+  },
+  "animations": {
+    "duration": {
+      "fast": "250ms",
+      "normal": "350ms",
+      "slow": "500ms"
+    },
+    "easing": {
+      "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "easeOut": "cubic-bezier(0, 0, 0.2, 1)",
+      "easeIn": "cubic-bezier(0.4, 0, 1, 1)"
+    }
+  },
+  "components": {
+    "button": {
+      "primary": {
+        "background": "linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%)",
+        "color": "#FFFFFF",
+        "border": "none",
+        "borderRadius": "1.5rem",
+        "padding": "1rem 2rem",
+        "fontWeight": "500",
+        "boxShadow": "0 4px 16px 0 rgba(156, 39, 176, 0.3)",
+        "hover": {
+          "transform": "scale(1.02)",
+          "boxShadow": "0 8px 24px 0 rgba(156, 39, 176, 0.4)"
+        }
+      },
+      "secondary": {
+        "background": "transparent",
+        "color": "#9C27B0",
+        "border": "2px solid #9C27B0",
+        "borderRadius": "1.5rem",
+        "padding": "1rem 2rem",
+        "fontWeight": "500",
+        "hover": {
+          "background": "#9C27B0",
+          "color": "#FFFFFF"
+        }
+      }
+    },
+    "card": {
+      "background": "#FFFFFF",
+      "border": "1px solid #F3E5F5",
+      "borderRadius": "2rem",
+      "boxShadow": "0 12px 24px 0 rgba(156, 39, 176, 0.15)",
+      "padding": "2rem",
+      "hover": {
+        "transform": "translateY(-6px)",
+        "boxShadow": "0 20px 40px 0 rgba(156, 39, 176, 0.2)"
+      }
+    },
+    "input": {
+      "background": "#FFFFFF",
+      "border": "2px solid #F3E5F5",
+      "borderRadius": "1.25rem",
+      "padding": "1rem 1.5rem",
+      "focus": {
+        "borderColor": "#9C27B0",
+        "boxShadow": "0 0 0 3px rgba(156, 39, 176, 0.1)"
+      }
+    }
+  },
+  "layout": {
+    "header": {
+      "background": "#FFFFFF",
+      "borderBottom": "1px solid #F3E5F5",
+      "height": "5rem",
+      "logo": {
+        "fontFamily": "Quicksand",
+        "fontSize": "1.5rem",
+        "fontWeight": "600",
+        "color": "#9C27B0"
+      }
+    },
+    "sidebar": {
+      "background": "#FDF7FF",
+      "borderRight": "1px solid #F3E5F5",
+      "width": "18rem"
+    },
+    "footer": {
+      "background": "#2E1A2E",
+      "color": "#FDF7FF",
+      "padding": "4rem 0"
+    }
+  },
+  "features": {
+    "roundedDesign": true,
+    "softColors": true,
+    "minimalLayout": true,
+    "beautyIcons": true,
+    "darkMode": true,
+    "animations": true
+  }
+}
