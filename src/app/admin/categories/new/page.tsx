@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { AdminLayout } from '@/components/layout';
@@ -44,6 +44,7 @@ interface ParentCategory {
   slug: string;
   color?: string;
   icon?: string;
+  parentId?: string | null;
 }
 
 export default function NewCategoryPage() {
@@ -176,7 +177,7 @@ export default function NewCategoryPage() {
   };
 
   // Üst kategorileri yükle
-  useState(() => {
+  useEffect(() => {
     const loadParentCategories = async () => {
       try {
         const response = await fetch('/api/admin/categories');
@@ -190,7 +191,7 @@ export default function NewCategoryPage() {
     };
     
     loadParentCategories();
-  });
+  }, []);
 
   if (status === 'loading') {
     return (
