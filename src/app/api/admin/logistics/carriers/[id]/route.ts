@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import connectDB from '@/lib/mongodb';
+import mongoose from 'mongoose';
 import ShippingCarrier, { IShippingCarrier } from '@/lib/models/ShippingCarrier';
 
 export async function GET(
@@ -26,7 +27,7 @@ export async function GET(
 
     return NextResponse.json({
       carrier: {
-        id: carrier._id.toString(),
+        id: (carrier._id as mongoose.Types.ObjectId).toString(),
         name: carrier.name,
         slug: carrier.slug,
         logo: carrier.logo,
@@ -99,7 +100,7 @@ export async function PUT(
       success: true,
       message: 'Carrier updated successfully',
       carrier: {
-        id: carrier._id.toString(),
+        id: (carrier._id as mongoose.Types.ObjectId).toString(),
         name: carrier.name,
         slug: carrier.slug,
         logo: carrier.logo,

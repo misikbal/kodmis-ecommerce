@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import connectDB from '@/lib/mongodb';
+import mongoose from 'mongoose';
 import Order, { IOrderItem } from '@/lib/models/Order';
 
 export async function GET(request: NextRequest) {
@@ -107,7 +108,7 @@ export async function GET(request: NextRequest) {
       shippingCost: order.shippingCost,
       discountAmount: order.discountAmount,
       items: order.items.map((item: IOrderItem) => ({
-        id: item._id?.toString() || '',
+        id: ((item as unknown) as { _id?: mongoose.Types.ObjectId })._id?.toString() || item.productId.toString(),
         productName: `Ürün ${item.productId}`, // Would be populated from Product model
         quantity: item.quantity,
         price: item.price,
