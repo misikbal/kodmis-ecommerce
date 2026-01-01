@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { AdminLayout } from '@/components/layout';
@@ -174,7 +174,7 @@ interface MarketplaceStats {
   recentSyncLogs: SyncLog[];
 }
 
-export default function MarketplacesPage() {
+function MarketplacesPageContent() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -989,5 +989,19 @@ export default function MarketplacesPage() {
         />
       )}
     </AdminLayout>
+  );
+}
+
+export default function MarketplacesPage() {
+  return (
+    <Suspense fallback={
+      <AdminLayout>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      </AdminLayout>
+    }>
+      <MarketplacesPageContent />
+    </Suspense>
   );
 }
