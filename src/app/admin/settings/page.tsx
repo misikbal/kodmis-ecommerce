@@ -114,7 +114,6 @@ import {
   Label,
   Ticket,
   Gift,
-  Present,
   Box,
   Package,
   ShoppingBag,
