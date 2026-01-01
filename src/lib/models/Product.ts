@@ -49,7 +49,7 @@ export interface IProduct extends Document {
   tags: string[];
   isFeatured: boolean;
   isBestseller: boolean;
-  isNew: boolean;
+  isNewProduct: boolean;
   viewCount: number;
   salesCount: number;
   createdAt: Date;
@@ -217,7 +217,7 @@ const ProductSchema = new Schema<IProduct>({
     type: Boolean,
     default: false,
   },
-  isNew: {
+  isNewProduct: {
     type: Boolean,
     default: false,
   },
@@ -244,6 +244,6 @@ ProductSchema.index({ status: 1 });
 ProductSchema.index({ tags: 1 });
 ProductSchema.index({ isFeatured: 1 });
 ProductSchema.index({ isBestseller: 1 });
-ProductSchema.index({ isNew: 1 });
+ProductSchema.index({ isNewProduct: 1 });
 
 export default mongoose.models.Product || mongoose.model<IProduct>('Product', ProductSchema);

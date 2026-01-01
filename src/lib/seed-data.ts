@@ -1,9 +1,15 @@
-import { getDatabase } from './mongodb';
+import connectDB from './mongodb';
+import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
 export async function seedDatabase() {
   try {
-    const db = await getDatabase();
+    await connectDB();
+    const db = mongoose.connection.db;
+    
+    if (!db) {
+      throw new Error('Database connection failed');
+    }
     
     // Clear existing data
     await db.collection('users').deleteMany({});

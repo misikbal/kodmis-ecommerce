@@ -27,7 +27,7 @@ export function PerformanceMonitor({
   });
   
   const [isVisible, setIsVisible] = useState(false);
-  const frameRef = useRef<number>();
+  const frameRef = useRef<number | undefined>(undefined);
   const lastTimeRef = useRef<number>(0);
   const frameCountRef = useRef<number>(0);
 

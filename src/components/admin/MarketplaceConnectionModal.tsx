@@ -14,12 +14,41 @@ import {
   Settings,
   Info
 } from 'lucide-react';
-import { Marketplace } from '@/lib/models/Marketplace';
+interface MarketplaceData {
+  id?: string;
+  _id?: string;
+  name: string;
+  slug: string;
+  logo: string;
+  website: string;
+  isActive: boolean;
+  isConnected: boolean;
+  lastSyncDate?: string | Date;
+  syncStatus: 'SUCCESS' | 'ERROR' | 'PENDING' | 'DISABLED';
+  errorCount: number;
+  productCount: number;
+  orderCount: number;
+  totalSales: number;
+  commissionRate: number;
+  apiKey?: string;
+  apiSecret?: string;
+  webhookUrl?: string;
+  settings: {
+    autoSync: boolean;
+    syncInterval: number;
+    priceMarkup: number;
+    stockSync: boolean;
+    orderSync: boolean;
+    imageSync: boolean;
+  };
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
+}
 
 interface MarketplaceConnectionModalProps {
   isOpen: boolean;
   onClose: () => void;
-  marketplace: Marketplace | null;
+  marketplace: MarketplaceData | null;
   onSave: (data: any) => void;
 }
 
