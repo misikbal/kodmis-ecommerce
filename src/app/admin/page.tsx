@@ -12,7 +12,6 @@ import {
   DollarSign, 
   TrendingUp,
   TrendingDown,
-  ArrowRight,
   Download,
   Calendar,
   Percent
