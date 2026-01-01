@@ -235,7 +235,11 @@ export default function NewProduct() {
   ];
 
   // Quick Templates - Hazır şablonlar
-  const quickTemplates = {
+  const quickTemplates: {
+    basic: Partial<ProductFormData>;
+    physical: Partial<ProductFormData>;
+    digital: Partial<ProductFormData>;
+  } = {
     basic: {
       name: 'Temel Ürün',
       price: 0,
@@ -263,11 +267,11 @@ export default function NewProduct() {
   const applyTemplate = (template: string) => {
     if (template === 'basic') {
       // Reset to basic
-      setFormData(prev => ({ ...prev, ...quickTemplates.basic }));
+      setFormData(prev => ({ ...prev, ...quickTemplates.basic } as ProductFormData));
     } else if (template === 'physical') {
-      setFormData(prev => ({ ...prev, ...quickTemplates.physical }));
+      setFormData(prev => ({ ...prev, ...quickTemplates.physical } as ProductFormData));
     } else if (template === 'digital') {
-      setFormData(prev => ({ ...prev, ...quickTemplates.digital }));
+      setFormData(prev => ({ ...prev, ...quickTemplates.digital } as ProductFormData));
     }
   };
 
