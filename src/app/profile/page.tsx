@@ -114,7 +114,11 @@ export default function ProfilePage() {
                 <p className="text-gray-600">{session.user?.email}</p>
                 <div className="flex items-center mt-2">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                    {session.user?.role === 'admin' ? 'Admin' : 'Müşteri'}
+                    {(session.user as { role?: string })?.role === 'ADMIN' 
+                      ? 'Admin' 
+                      : (session.user as { role?: string })?.role === 'VENDOR' 
+                        ? 'Satıcı' 
+                        : 'Müşteri'}
                   </span>
                 </div>
               </div>

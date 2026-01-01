@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import connectDB from '@/lib/mongodb';
-import Order from '@/lib/models/Order';
+import Order, { IOrderItem } from '@/lib/models/Order';
 
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
-    if (!session || session.user.role !== 'ADMIN') {
+    if (!session || (session.user as { role?: string })?.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -106,7 +106,7 @@ export async function GET(request: NextRequest) {
       taxAmount: order.taxAmount,
       shippingCost: order.shippingCost,
       discountAmount: order.discountAmount,
-      items: order.items.map(item => ({
+      items: order.items.map((item: IOrderItem) => ({
         id: item._id?.toString() || '',
         productName: `Ürün ${item.productId}`, // Would be populated from Product model
         quantity: item.quantity,
@@ -152,7 +152,7 @@ export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
-    if (!session || session.user.role !== 'ADMIN') {
+    if (!session || (session.user as { role?: string })?.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -183,7 +183,7 @@ export async function PUT(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
-    if (!session || session.user.role !== 'ADMIN') {
+    if (!session || (session.user as { role?: string })?.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -216,7 +216,7 @@ export async function DELETE(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
-    if (!session || session.user.role !== 'ADMIN') {
+    if (!session || (session.user as { role?: string })?.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

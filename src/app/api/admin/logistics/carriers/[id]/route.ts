@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import connectDB from '@/lib/mongodb';
-import ShippingCarrier from '@/lib/models/ShippingCarrier';
+import ShippingCarrier, { IShippingCarrier } from '@/lib/models/ShippingCarrier';
 
 export async function GET(
   request: NextRequest,
@@ -11,14 +11,14 @@ export async function GET(
   try {
     const session = await getServerSession(authOptions);
     
-    if (!session || session.user.role !== 'ADMIN') {
+    if (!session || (session.user as { role?: string })?.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
     await connectDB();
     
     const resolvedParams = await params;
-    const carrier = await ShippingCarrier.findById(resolvedParams.id).lean();
+    const carrier = await ShippingCarrier.findById(resolvedParams.id).lean() as IShippingCarrier | null;
 
     if (!carrier) {
       return NextResponse.json({ error: 'Carrier not found' }, { status: 404 });
@@ -54,7 +54,7 @@ export async function PUT(
   try {
     const session = await getServerSession(authOptions);
     
-    if (!session || session.user.role !== 'ADMIN') {
+    if (!session || (session.user as { role?: string })?.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -89,7 +89,7 @@ export async function PUT(
       resolvedParams.id,
       { $set: updateData },
       { new: true }
-    ).lean();
+    ).lean() as IShippingCarrier | null;
 
     if (!carrier) {
       return NextResponse.json({ error: 'Carrier not found' }, { status: 404 });
@@ -127,7 +127,7 @@ export async function DELETE(
   try {
     const session = await getServerSession(authOptions);
     
-    if (!session || session.user.role !== 'ADMIN') {
+    if (!session || (session.user as { role?: string })?.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

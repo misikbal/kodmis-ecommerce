@@ -61,7 +61,7 @@ function generateThemeSuggestions(categories: string[], brandColors: string[], p
   };
   
   // En çok geçen kategoriyi bul
-  const categoryCounts = {};
+  const categoryCounts: Record<string, number> = {};
   categories.forEach(category => {
     const normalizedCategory = category.toLowerCase();
     categoryCounts[normalizedCategory] = (categoryCounts[normalizedCategory] || 0) + 1;
@@ -71,7 +71,7 @@ function generateThemeSuggestions(categories: string[], brandColors: string[], p
     categoryCounts[a] > categoryCounts[b] ? a : b
   );
   
-  const suggestedThemeId = categoryThemeMap[topCategory] || 'default';
+  const suggestedThemeId = (categoryThemeMap as Record<string, string>)[topCategory] || 'default';
   
   // Tema önerisi oluştur
   suggestions.push({
@@ -117,7 +117,7 @@ function generateThemeSuggestions(categories: string[], brandColors: string[], p
       'industrial': 'automotive'
     };
     
-    const styleThemeId = styleThemeMap[preferences.style] || 'default';
+    const styleThemeId = (styleThemeMap as Record<string, string>)[preferences.style] || 'default';
     
     suggestions.push({
       id: `ai-style-${Date.now()}`,
@@ -136,7 +136,7 @@ function generateThemeSuggestions(categories: string[], brandColors: string[], p
 // Renk yardımcı fonksiyonları
 function generateComplementaryColor(hex: string): string {
   // Basit tamamlayıcı renk algoritması
-  const colorMap = {
+  const colorMap: Record<string, string> = {
     '#FF0000': '#00FFFF', // Kırmızı -> Cyan
     '#00FF00': '#FF00FF', // Yeşil -> Magenta
     '#0000FF': '#FFFF00', // Mavi -> Sarı
@@ -150,7 +150,7 @@ function generateComplementaryColor(hex: string): string {
 
 function generateAccentColor(hex: string): string {
   // Basit vurgu rengi algoritması
-  const colorMap = {
+  const colorMap: Record<string, string> = {
     '#FF0000': '#FF6B6B', // Kırmızı -> Açık kırmızı
     '#00FF00': '#6BFF6B', // Yeşil -> Açık yeşil
     '#0000FF': '#6B6BFF', // Mavi -> Açık mavi

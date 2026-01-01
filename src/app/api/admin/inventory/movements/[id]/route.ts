@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import connectDB from '@/lib/mongodb';
 import StockMovement from '@/lib/models/StockMovement';
-import Product from '@/lib/models/Product';
+import Product, { IProduct } from '@/lib/models/Product';
 
 // GET - Tek bir hareketi getir
 export async function GET(
@@ -14,7 +14,7 @@ export async function GET(
     const resolvedParams = await params;
     const session = await getServerSession(authOptions);
     
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || (session.user as { role?: string })?.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -25,7 +25,7 @@ export async function GET(
       return NextResponse.json({ error: 'Movement not found' }, { status: 404 });
     }
 
-    const product = await Product.findById(movement.productId).lean();
+    const product = await Product.findById(movement.productId).lean() as IProduct | null;
     
     return NextResponse.json({
       id: movement._id.toString(),
@@ -61,7 +61,7 @@ export async function PUT(
     const resolvedParams = await params;
     const session = await getServerSession(authOptions);
     
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || (session.user as { role?: string })?.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -113,7 +113,7 @@ export async function DELETE(
     const resolvedParams = await params;
     const session = await getServerSession(authOptions);
     
-    if (!session || session.user?.role !== 'ADMIN') {
+    if (!session || (session.user as { role?: string })?.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
