@@ -290,7 +290,7 @@ Oluşturan,${movement.createdBy}
     );
   }
 
-  if (!session || session.user?.role !== 'ADMIN') {
+  if (!session || (session.user as { role?: string })?.role !== 'ADMIN') {
     router.push('/auth/signin');
     return null;
   }

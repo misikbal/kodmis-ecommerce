@@ -271,7 +271,7 @@ export default function AnalyticsPage() {
       return;
     }
     
-    if (session.user?.role !== 'ADMIN') {
+    if ((session.user as { role?: string })?.role !== 'ADMIN') {
       router.push('/auth/signin');
       return;
     }

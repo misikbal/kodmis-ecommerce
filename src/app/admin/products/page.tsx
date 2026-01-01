@@ -189,7 +189,7 @@ export default function ProductsPage() {
       return;
     }
     
-    if (session.user?.role !== 'ADMIN') {
+    if ((session.user as { role?: string })?.role !== 'ADMIN') {
       router.push('/auth/signin');
       return;
     }
@@ -204,7 +204,7 @@ export default function ProductsPage() {
 
   // Sayfa değiştiğinde verileri çek
   useEffect(() => {
-    if (activeTab === 'products' && session && session.user?.role === 'ADMIN') {
+    if (activeTab === 'products' && session && (session.user as { role?: string })?.role === 'ADMIN') {
       fetchData();
     }
   }, [currentPage]);

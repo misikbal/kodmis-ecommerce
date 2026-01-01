@@ -218,7 +218,7 @@ export default function PerformancePage() {
       return;
     }
     
-    if (session.user?.role !== 'ADMIN') {
+    if ((session.user as { role?: string })?.role !== 'ADMIN') {
       router.push('/auth/signin');
       return;
     }
