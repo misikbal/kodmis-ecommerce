@@ -28,7 +28,6 @@ import {
   Globe,
   Copy,
   Archive,
-  Unarchive,
   ChevronDown,
   ChevronUp,
   Grid,
