@@ -7,7 +7,7 @@ import Product from '@/lib/models/Product';
 // GET - Tek ürün getir
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -18,7 +18,8 @@ export async function GET(
 
     await connectDB();
 
-    const product = await Product.findById(params.id)
+    const { id } = await params;
+    const product = await Product.findById(id)
       .populate('categoryId', 'name slug icon color')
       .lean();
 
@@ -39,7 +40,7 @@ export async function GET(
 // PUT - Ürün güncelle
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -50,6 +51,7 @@ export async function PUT(
 
     await connectDB();
 
+    const { id } = await params;
     const body = await request.json();
     
     // Debug: Log the full body received
@@ -99,7 +101,7 @@ export async function PUT(
     // Check if SKU is unique (excluding current product)
     const existingProduct = await Product.findOne({ 
       sku, 
-      _id: { $ne: params.id } 
+      _id: { $ne: id } 
     });
     
     if (existingProduct) {
@@ -169,7 +171,7 @@ export async function PUT(
     });
 
     const updatedProduct = await Product.findByIdAndUpdate(
-      params.id,
+      id,
       { $set: updateData },
       { new: true, runValidators: true }
     );
@@ -212,7 +214,7 @@ export async function PUT(
 // DELETE - Ürün sil
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -223,7 +225,8 @@ export async function DELETE(
 
     await connectDB();
 
-    const deletedProduct = await Product.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const deletedProduct = await Product.findByIdAndDelete(id);
 
     if (!deletedProduct) {
       return NextResponse.json(

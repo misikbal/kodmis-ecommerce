@@ -8,10 +8,10 @@ const themesDir = path.join(process.cwd(), 'src/lib/themes');
 // Belirli bir temayı getir
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const themeId = params.id;
+    const { id: themeId } = await params;
     const fileName = `${themeId}.json`;
     const filePath = path.join(themesDir, fileName);
     
@@ -39,10 +39,10 @@ export async function GET(
 // Temayı güncelle
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const themeId = params.id;
+    const { id: themeId } = await params;
     const themeData = await request.json();
     const fileName = `${themeId}.json`;
     const filePath = path.join(themesDir, fileName);
@@ -74,10 +74,10 @@ export async function PUT(
 // Temayı sil
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const themeId = params.id;
+    const { id: themeId } = await params;
     const fileName = `${themeId}.json`;
     const filePath = path.join(themesDir, fileName);
     

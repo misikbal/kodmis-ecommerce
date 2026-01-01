@@ -5,7 +5,7 @@ import connectDB from '@/lib/mongodb';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -16,7 +16,7 @@ export async function POST(
 
     await connectDB();
     
-    const marketplaceId = params.id;
+    const { id: marketplaceId } = await params;
     const body = await request.json();
     const { type = 'PRODUCT' } = body; // PRODUCT, STOCK, ORDER, PRICE
     
@@ -57,7 +57,7 @@ export async function POST(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -68,7 +68,7 @@ export async function GET(
 
     await connectDB();
     
-    const marketplaceId = params.id;
+    const { id: marketplaceId } = await params;
     
     // Mock sync status
     const syncStatus = {
