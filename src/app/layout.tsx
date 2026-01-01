@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import SessionProvider from "@/components/providers/SessionProvider";
 import ThemeProvider from "@/components/providers/ThemeProvider";
+import { AlertProvider } from "@/components/ui/alert";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <SessionProvider>
           <ThemeProvider>
-            {children}
+            <AlertProvider position="top-right" maxAlerts={5}>
+              {children}
+            </AlertProvider>
           </ThemeProvider>
         </SessionProvider>
       </body>

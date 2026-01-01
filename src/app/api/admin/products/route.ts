@@ -16,29 +16,122 @@ export async function GET(request: NextRequest) {
 
     await connectDB();
     
-    const products = await Product.find({})
-      .populate('categoryId', 'name slug icon color')
-      .sort({ createdAt: -1 })
-      .lean();
-    
-    // Manually populate brandId for products that have it
-    const brandIds = products
-      .filter(p => p.brandId && typeof p.brandId === 'object')
-      .map(p => (p.brandId as any)?._id || p.brandId);
-    
-    if (brandIds.length > 0) {
-      const brands = await Brand.find({ _id: { $in: brandIds } }).lean();
-      const brandMap = new Map(brands.map(b => [b._id.toString(), b]));
-      
-      products.forEach((product: any) => {
-        if (product.brandId) {
-          const brandId = typeof product.brandId === 'object' ? product.brandId._id : product.brandId;
-          product.brandId = brandMap.get(brandId?.toString());
-        }
-      });
+    // Query parameters
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '20');
+    const search = searchParams.get('search') || '';
+    const status = searchParams.get('status') || '';
+    const type = searchParams.get('type') || '';
+    const category = searchParams.get('category') || '';
+    const brand = searchParams.get('brand') || '';
+    const stockStatus = searchParams.get('stockStatus') || '';
+    const featured = searchParams.get('featured') || '';
+
+    // Build query
+    const query: any = {};
+
+    // Search filter
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { sku: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } },
+      ];
     }
 
-    return NextResponse.json(products);
+    // Status filter
+    if (status) {
+      query.status = status;
+    }
+
+    // Type filter
+    if (type) {
+      query.type = type;
+    }
+
+    // Category filter
+    if (category) {
+      query.categoryId = category;
+    }
+
+    // Brand filter
+    if (brand) {
+      query.brandId = brand;
+    }
+
+    // Stock status filter
+    if (stockStatus === 'in_stock') {
+      query.quantity = { $gt: 0 };
+    } else if (stockStatus === 'out_of_stock') {
+      query.quantity = { $lte: 0 };
+    } else if (stockStatus === 'low_stock') {
+      query.quantity = { $lte: 5, $gt: 0 };
+    }
+
+    // Featured filter
+    if (featured === 'true') {
+      query.isFeatured = true;
+    } else if (featured === 'false') {
+      query.isFeatured = false;
+    }
+
+    // Get total count
+    const total = await Product.countDocuments(query);
+
+    // Get products with pagination
+    const skip = (page - 1) * limit;
+    const products = await Product.find(query)
+      .populate('categoryId', 'name slug')
+      .populate('brandId', 'name slug logo')
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    // Format products for frontend
+    const formattedProducts = products.map((product: any) => ({
+      id: product._id.toString(),
+      _id: product._id.toString(),
+      name: product.name,
+      slug: product.slug,
+      sku: product.sku || '',
+      price: product.price,
+      comparePrice: product.comparePrice,
+      costPrice: product.costPrice,
+      quantity: product.quantity || 0,
+      status: product.status,
+      type: product.type,
+      images: product.images || [],
+      category: product.categoryId ? {
+        id: product.categoryId._id?.toString() || product.categoryId.toString(),
+        name: product.categoryId.name || '',
+        slug: product.categoryId.slug || '',
+      } : null,
+      brand: product.brandId ? {
+        id: product.brandId._id?.toString() || product.brandId.toString(),
+        name: product.brandId.name || '',
+        slug: product.brandId.slug || '',
+        logo: product.brandId.logo || '',
+      } : null,
+      isFeatured: product.isFeatured || false,
+      isBestseller: product.isBestseller || false,
+      isNew: product.isNew || false,
+      viewCount: product.viewCount || 0,
+      salesCount: product.salesCount || 0,
+      hasVariants: product.hasVariants || false,
+      variants: product.variants || [],
+      createdAt: product.createdAt,
+      updatedAt: product.updatedAt,
+    }));
+
+    return NextResponse.json({
+      products: formattedProducts,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+      limit,
+    });
   } catch (error) {
     console.error('Error fetching products:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

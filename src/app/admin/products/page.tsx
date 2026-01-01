@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { AdminLayout } from '@/components/layout';
 import CRUDModal from '@/components/admin/CRUDModal';
 import BulkActions from '@/components/admin/BulkActions';
+import { useAlertContext } from '@/components/ui/alert';
 import { 
   Search, 
   Filter, 
@@ -33,6 +34,8 @@ import {
   Archive,
   ChevronDown,
   ChevronUp,
+  ChevronLeft,
+  ChevronRight,
   Grid,
   List,
   Settings,
@@ -145,6 +148,7 @@ type ActiveTab = 'products' | 'categories' | 'features' | 'brands';
 export default function ProductsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const alert = useAlertContext();
   
   // Tab management
   const [activeTab, setActiveTab] = useState<ActiveTab>('products');
@@ -162,6 +166,7 @@ export default function ProductsPage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('list');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [editingItem, setEditingItem] = useState<any>(null);
   
@@ -189,8 +194,20 @@ export default function ProductsPage() {
       return;
     }
 
+    // Filtreler değiştiğinde sayfa numarasını sıfırla
+    if (activeTab === 'products') {
+      setCurrentPage(1);
+    }
+
     fetchData();
-  }, [session, status, router, activeTab, currentPage, filters]);
+  }, [session, status, router, activeTab, filters]);
+
+  // Sayfa değiştiğinde verileri çek
+  useEffect(() => {
+    if (activeTab === 'products' && session && session.user?.role === 'ADMIN') {
+      fetchData();
+    }
+  }, [currentPage]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -198,14 +215,28 @@ export default function ProductsPage() {
       if (activeTab === 'products') {
         const queryParams = new URLSearchParams({
           page: currentPage.toString(),
+          limit: '20',
           ...Object.fromEntries(Object.entries(filters).filter(([_, value]) => value))
         });
         
         const response = await fetch(`/api/admin/products?${queryParams}`);
         if (response.ok) {
           const data = await response.json();
-          setProducts(data.products || data);
+          // API'den gelen verileri formatla
+          const formattedProducts = (data.products || []).map((product: any) => ({
+            ...product,
+            id: product.id || product._id || product.id,
+          }));
+          setProducts(formattedProducts);
           setTotalPages(data.totalPages || 1);
+          setTotalProducts(data.total || 0);
+        } else {
+          console.error('Failed to fetch products:', response.statusText);
+          setProducts([]);
+          alert.error('Ürünler yüklenirken bir hata oluştu', {
+            title: 'Hata',
+            duration: 5000
+          });
         }
       } else {
         const response = await fetch(`/api/admin/${activeTab}`);
@@ -226,6 +257,11 @@ export default function ProductsPage() {
       }
     } catch (error) {
       console.error('Error fetching data:', error);
+      setProducts([]);
+      alert.error('Veriler yüklenirken bir hata oluştu', {
+        title: 'Bağlantı Hatası',
+        duration: 5000
+      });
     } finally {
       setLoading(false);
     }
@@ -301,11 +337,19 @@ export default function ProductsPage() {
         await fetchData();
         setShowModal(false);
         setEditingItem(null);
+        alert.success(editingItem ? 'Başarıyla güncellendi' : 'Başarıyla oluşturuldu', {
+          title: 'Başarılı',
+          duration: 3000
+        });
       } else {
         throw new Error('Save failed');
       }
     } catch (error) {
       console.error('Error saving:', error);
+      alert.error('Kaydetme işlemi başarısız oldu', {
+        title: 'Hata',
+        duration: 5000
+      });
       throw error;
     }
   };
@@ -320,16 +364,28 @@ export default function ProductsPage() {
 
       if (response.ok) {
         await fetchData();
+        alert.success('Öğe başarıyla silindi', {
+          title: 'Başarılı',
+          duration: 3000
+        });
       } else {
         throw new Error('Delete failed');
       }
     } catch (error) {
       console.error('Error deleting:', error);
+      alert.error('Silme işlemi başarısız oldu', {
+        title: 'Hata',
+        duration: 5000
+      });
     }
   };
 
   const handleBulkDelete = async () => {
     if (!confirm(`${selectedItems.length} öğeyi silmek istediğinizden emin misiniz?`)) return;
+
+    const loadingId = alert.loading('Siliniyor...', {
+      title: 'İşlem Devam Ediyor'
+    });
 
     try {
       for (const id of selectedItems) {
@@ -339,12 +395,26 @@ export default function ProductsPage() {
       }
       setSelectedItems([]);
       await fetchData();
+      alert.dismiss(loadingId);
+      alert.success(`${selectedItems.length} öğe başarıyla silindi`, {
+        title: 'Başarılı',
+        duration: 3000
+      });
     } catch (error) {
       console.error('Error bulk deleting:', error);
+      alert.dismiss(loadingId);
+      alert.error('Toplu silme işlemi başarısız oldu', {
+        title: 'Hata',
+        duration: 5000
+      });
     }
   };
 
   const handleBulkUpdate = async (action: string) => {
+    const loadingId = alert.loading('Güncelleniyor...', {
+      title: 'İşlem Devam Ediyor'
+    });
+
     try {
       for (const id of selectedItems) {
         const updateData: any = {};
@@ -374,8 +444,18 @@ export default function ProductsPage() {
       }
       setSelectedItems([]);
       await fetchData();
+      alert.dismiss(loadingId);
+      alert.success(`${selectedItems.length} öğe başarıyla güncellendi`, {
+        title: 'Başarılı',
+        duration: 3000
+      });
     } catch (error) {
       console.error('Error bulk updating:', error);
+      alert.dismiss(loadingId);
+      alert.error('Toplu güncelleme işlemi başarısız oldu', {
+        title: 'Hata',
+        duration: 5000
+      });
     }
   };
 
@@ -532,14 +612,16 @@ export default function ProductsPage() {
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
-          {(products as Product[]).map((product: Product) => (
-            <tr key={product.id} className="hover:bg-gray-50">
+          {(products as Product[]).map((product: Product) => {
+            const productId = product.id || (product as any)._id || '';
+            return (
+            <tr key={productId} className="hover:bg-gray-50">
               <td className="px-6 py-4 whitespace-nowrap">
                 <button
-                  onClick={() => handleSelectItem(product.id)}
+                  onClick={() => handleSelectItem(productId)}
                   className="flex items-center"
                 >
-                  {selectedItems.includes(product.id) ? (
+                  {selectedItems.includes(productId) ? (
                     <CheckSquare className="h-4 w-4 text-blue-600" />
                   ) : (
                     <Square className="h-4 w-4 text-gray-400" />
@@ -588,10 +670,10 @@ export default function ProductsPage() {
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {product.category?.name || '-'}
+                {(product as any).category?.name || product.category?.name || '-'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {product.brand?.name || '-'}
+                {(product as any).brand?.name || product.brand?.name || '-'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(product.status)}`}>
@@ -610,7 +692,7 @@ export default function ProductsPage() {
                     <Edit className="h-4 w-4" />
                   </button>
                   <button 
-                    onClick={() => handleDelete(product.id)}
+                    onClick={() => handleDelete(productId)}
                     className="text-red-600 hover:text-red-900"
                   >
                     <Trash2 className="h-4 w-4" />
@@ -618,7 +700,8 @@ export default function ProductsPage() {
                 </div>
               </td>
             </tr>
-          ))}
+          );
+          })}
         </tbody>
       </table>
     </div>
@@ -1120,6 +1203,85 @@ export default function ProductsPage() {
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             {renderContent()}
           </div>
+
+          {/* Pagination */}
+          {activeTab === 'products' && totalPages > 1 && (
+            <div className="flex items-center justify-between px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
+              <div className="flex flex-1 justify-between sm:hidden">
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                  disabled={currentPage === 1}
+                  className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Önceki
+                </button>
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                  disabled={currentPage === totalPages}
+                  className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Sonraki
+                </button>
+              </div>
+              <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm text-gray-700">
+                    Toplam <span className="font-medium">{totalProducts}</span> ürün bulundu
+                    {totalProducts > 0 && (
+                      <span className="ml-2">
+                        (Sayfa {currentPage} / {totalPages})
+                      </span>
+                    )}
+                  </p>
+                </div>
+                <div>
+                  <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1}
+                      className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <span className="sr-only">Önceki</span>
+                      <ChevronLeft className="h-5 w-5" />
+                    </button>
+                    {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                      let pageNum;
+                      if (totalPages <= 5) {
+                        pageNum = i + 1;
+                      } else if (currentPage <= 3) {
+                        pageNum = i + 1;
+                      } else if (currentPage >= totalPages - 2) {
+                        pageNum = totalPages - 4 + i;
+                      } else {
+                        pageNum = currentPage - 2 + i;
+                      }
+                      return (
+                        <button
+                          key={pageNum}
+                          onClick={() => setCurrentPage(pageNum)}
+                          className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                            currentPage === pageNum
+                              ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
+                              : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    })}
+                    <button
+                      onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                      disabled={currentPage === totalPages}
+                      className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <span className="sr-only">Sonraki</span>
+                      <ChevronRight className="h-5 w-5" />
+                    </button>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* CRUD Modal */}
           <CRUDModal

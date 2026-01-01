@@ -9,6 +9,7 @@ import { testBrands } from '../test-data/brands';
 import { testCategories } from '../test-data/categories';
 import { testUsers } from '../test-data/users';
 import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose';
 
 async function seedDatabase() {
   try {
@@ -63,7 +64,7 @@ async function seedDatabase() {
       }
     }
     // Create users from test data
-    const users = await User.insertMany(await Promise.all(testUsers.map(async user => ({
+    const testUsersData = await Promise.all(testUsers.map(async user => ({
       email: user.email,
       username: user.email.split('@')[0], // Use email prefix as username
       firstName: user.name.split(' ')[0],
@@ -75,7 +76,45 @@ async function seedDatabase() {
       hashedPassword: await bcrypt.hash(user.password, 10), // Hash the password
       loyaltyPoints: Math.floor(Math.random() * 1000),
       referralCode: `${user.email.split('@')[0].toUpperCase()}${Math.floor(Math.random() * 1000)}`,
-    }))));
+    })));
+
+    // Add users from seed-data.ts (admin and user)
+    const seedDataUsers = [
+      {
+        email: 'admin@kodmis.com',
+        username: 'admin',
+        firstName: 'Admin',
+        lastName: 'User',
+        phone: '+90 555 000 0001',
+        role: 'ADMIN' as const,
+        isActive: true,
+        isVerified: true,
+        hashedPassword: await bcrypt.hash('admin123', 10),
+        loyaltyPoints: 0,
+        referralCode: 'ADMIN001',
+      },
+      {
+        email: 'user@kodmis.com',
+        username: 'user',
+        firstName: 'Test',
+        lastName: 'User',
+        phone: '+90 555 000 0002',
+        role: 'CUSTOMER' as const,
+        isActive: true,
+        isVerified: true,
+        hashedPassword: await bcrypt.hash('user123', 10),
+        loyaltyPoints: Math.floor(Math.random() * 1000),
+        referralCode: 'USER001',
+      },
+    ];
+
+    // Combine all users and filter duplicates by email
+    const allUsersData = [...testUsersData, ...seedDataUsers];
+    const uniqueUsersData = allUsersData.filter((user, index, self) => 
+      index === self.findIndex(u => u.email === user.email)
+    );
+
+    const users = await User.insertMany(uniqueUsersData);
     console.log(`✅ Created ${users.length} users`);
 
     // Create sample products
@@ -278,10 +317,50 @@ async function seedDatabase() {
     console.log('   Manager: manager@kodmis.com / manager123');
     console.log('   Customer: customer1@kodmis.com / customer123');
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ Error seeding database:', error);
+    
+    // Daha detaylı hata mesajları
+    if (error.code === 'ENOTFOUND') {
+
+      console.error('\n🔍 MongoDB Bağlantı Hatası (DNS):');
+      console.error('   - İnternet bağlantınızı kontrol edin');
+      console.error('   - MongoDB Atlas cluster\'ınızın aktif olduğundan emin olun');
+      console.error('   - MongoDB URI\'nizin doğru olduğundan emin olun');
+      console.error(`   - Mevcut URI: ${process.env.MONGODB_URI?.substring(0, 50)}...`);
+    } else if (error.name === 'MongooseServerSelectionError' || error.reason?.type === 'ReplicaSetNoPrimary') {
+      console.error('\n🔍 MongoDB Replica Set Bağlantı Hatası:');
+      console.error('   ⚠️  Primary server bulunamadı veya timeout oldu');
+      console.error('\n   Çözüm önerileri:');
+      console.error('   1. MongoDB Atlas\'ta IP Whitelist kontrolü:');
+      console.error('      - Network Access > Add IP Address');
+      console.error('      - "Allow Access from Anywhere" (0.0.0.0/0) ekleyin');
+      console.error('   2. MongoDB Atlas cluster\'ının aktif olduğundan emin olun');
+      console.error('   3. Firewall veya VPN engelleyip engellemediğini kontrol edin');
+      console.error('   4. İnternet bağlantınızı test edin');
+      if (error.reason?.servers) {
+        console.error(`\n   Bağlanmaya çalışılan sunucular: ${Array.from(error.reason.servers.keys()).join(', ')}`);
+      }
+    } else if (error.name === 'MongoServerError') {
+      console.error('\n🔍 MongoDB Sunucu Hatası:');
+      console.error(`   - Hata kodu: ${error.code}`);
+      console.error(`   - Mesaj: ${error.message}`);
+    } else {
+      console.error('\n🔍 Hata Detayları:');
+      console.error(`   - Tip: ${error.name || 'Bilinmeyen'}`);
+      console.error(`   - Mesaj: ${error.message || error}`);
+      if (error.reason) {
+        console.error(`   - Replica Set Tipi: ${error.reason.type || 'Bilinmeyen'}`);
+      }
+    }
+    
     process.exit(1);
   } finally {
+    // MongoDB bağlantısını kapat
+    if (mongoose.connection.readyState === 1) {
+      await mongoose.connection.close();
+      console.log('🔌 MongoDB bağlantısı kapatıldı');
+    }
     process.exit(0);
   }
 }

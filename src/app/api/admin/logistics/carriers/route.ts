@@ -145,7 +145,7 @@ export async function POST(request: NextRequest) {
     await connectDB();
     
     const body = await request.json();
-    const { name, slug, logo, website, supportedServices, pricing, settings } = body;
+    const { name, slug, logo, website, apiKey, apiSecret, apiEndpoint, supportedServices, pricing, settings } = body;
     
     if (!name || !slug || !logo) {
       return NextResponse.json(
@@ -169,6 +169,9 @@ export async function POST(request: NextRequest) {
       slug,
       logo,
       website,
+      apiKey: apiKey || '',
+      apiSecret: apiSecret || '',
+      apiEndpoint: apiEndpoint || '',
       supportedServices: supportedServices || [],
       pricing: pricing || {
         weightUnit: 'KG',
@@ -183,8 +186,8 @@ export async function POST(request: NextRequest) {
         allowPickup: false,
         autoTracking: false
       },
-      isActive: false,
-      integrationStatus: 'DISCONNECTED'
+      isActive: apiKey ? true : false,
+      integrationStatus: apiKey ? 'CONNECTED' : 'DISCONNECTED'
     });
 
     await carrier.save();

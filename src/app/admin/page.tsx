@@ -4,31 +4,18 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { AdminLayout } from '@/components/layout';
+import Link from 'next/link';
 import { 
   Package, 
   ShoppingCart, 
   Users, 
   DollarSign, 
   TrendingUp,
-  Plus,
-  Eye,
+  TrendingDown,
   ArrowRight,
-  AlertTriangle,
-  Clock,
-  CheckCircle,
-  XCircle,
-  Activity,
-  Target,
-  Truck,
-  CreditCard,
-  BarChart3,
   Download,
-  RefreshCw,
-  Filter,
   Calendar,
-  Zap,
-  Bell,
-  ExternalLink
+  Percent
 } from 'lucide-react';
 
 interface Stats {
@@ -52,13 +39,6 @@ interface Stats {
     total: number;
     status: string;
     createdAt: string;
-  }>;
-  alerts: Array<{
-    id: string;
-    type: 'warning' | 'error' | 'info' | 'success';
-    title: string;
-    message: string;
-    timestamp: string;
   }>;
 }
 
@@ -118,320 +98,322 @@ export default function AdminDashboard() {
     );
   }
 
-  const kpiCards = [
-    {
-      title: 'Brüt Ciro',
-      value: `₺${stats.totalRevenue.toLocaleString()}`,
-      icon: DollarSign,
-      color: 'bg-emerald-500',
-      change: '+15%',
-      changeType: 'positive' as const,
-      period: 'Bu ay',
-      trend: [120, 135, 142, 158, 165, 172, 180]
-    },
-    {
-      title: 'Net Ciro',
-      value: `₺${(stats.totalRevenue * 0.85).toLocaleString()}`,
-      icon: Target,
-      color: 'bg-blue-500',
-      change: '+12%',
-      changeType: 'positive' as const,
-      period: 'Bu ay',
-      trend: [100, 115, 120, 135, 140, 145, 153]
-    },
-    {
-      title: 'Sipariş Adedi',
-      value: stats.totalOrders.toLocaleString(),
-      icon: ShoppingCart,
-      color: 'bg-purple-500',
-      change: '+8%',
-      changeType: 'positive' as const,
-      period: 'Bu ay',
-      trend: [45, 52, 48, 61, 58, 67, 72]
-    },
-    {
-      title: 'Ortalama Sipariş Değeri',
-      value: `₺${stats.averageOrderValue.toLocaleString()}`,
-      icon: BarChart3,
-      color: 'bg-orange-500',
-      change: '+5%',
-      changeType: 'positive' as const,
-      period: 'Bu ay',
-      trend: [250, 260, 255, 270, 275, 280, 285]
-    },
-    {
-      title: 'Conversion Rate',
-      value: `${stats.conversionRate}%`,
-      icon: TrendingUp,
-      color: 'bg-green-500',
-      change: '+2%',
-      changeType: 'positive' as const,
-      period: 'Bu hafta',
-      trend: [2.1, 2.3, 2.0, 2.4, 2.5, 2.6, 2.8]
-    },
-    {
-      title: 'Ortalama Teslim Süresi',
-      value: `${stats.averageDeliveryTime} gün`,
-      icon: Truck,
-      color: 'bg-cyan-500',
-      change: '-1 gün',
-      changeType: 'positive' as const,
-      period: 'Bu ay',
-      trend: [5, 4.5, 4.2, 4.0, 3.8, 3.5, 3.2]
-    },
-    {
-      title: 'İade Oranı',
-      value: `${stats.returnRate}%`,
-      icon: RefreshCw,
-      color: 'bg-red-500',
-      change: '-0.5%',
-      changeType: 'positive' as const,
-      period: 'Bu ay',
-      trend: [8, 7.5, 7.2, 6.8, 6.5, 6.2, 5.8]
-    },
-    {
-      title: 'Aktif Ziyaretçi',
-      value: stats.activeVisitors.toLocaleString(),
-      icon: Activity,
-      color: 'bg-indigo-500',
-      change: '+23%',
-      changeType: 'positive' as const,
-      period: 'Şu anda',
-      trend: [120, 135, 142, 158, 165, 172, 180]
-    }
-  ];
-
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'bg-yellow-100 text-yellow-800';
-      case 'processing': return 'bg-blue-100 text-blue-800';
-      case 'shipped': return 'bg-purple-100 text-purple-800';
-      case 'delivered': return 'bg-green-100 text-green-800';
-      case 'cancelled': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'pending':
+      case 'processing':
+        return 'bg-amber-50 text-amber-700 border-amber-200';
+      case 'shipped':
+        return 'bg-blue-50 text-blue-700 border-blue-200';
+      case 'delivered':
+        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+      case 'cancelled':
+        return 'bg-red-50 text-red-700 border-red-200';
+      default:
+        return 'bg-gray-50 text-gray-700 border-gray-200';
     }
   };
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'pending': return 'Beklemede';
+      case 'pending': return 'Hazırlanıyor';
       case 'processing': return 'İşleniyor';
       case 'shipped': return 'Kargoda';
-      case 'delivered': return 'Teslim Edildi';
-      case 'cancelled': return 'İptal Edildi';
+      case 'delivered': return 'Tamamlandı';
+      case 'cancelled': return 'İptal';
       default: return status;
     }
   };
 
+  const formatTimeAgo = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / 60000);
+    
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes} dk önce`;
+    } else if (diffInMinutes < 1440) {
+      const hours = Math.floor(diffInMinutes / 60);
+      return `${hours} saat önce`;
+    } else {
+      const days = Math.floor(diffInMinutes / 1440);
+      return days === 1 ? 'Dün' : `${days} gün önce`;
+    }
+  };
+
+  const today = new Date().toLocaleDateString('tr-TR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+
   return (
     <AdminLayout title="Dashboard" description="Sistem genel bakış ve KPI'lar">
-      <div className="space-y-6">
-        {/* Welcome & Quick Stats */}
-        <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl p-6 text-white">
-          <div className="flex items-center justify-between">
+      <div className="max-w-[1600px] mx-auto w-full">
+        {/* Page Heading */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              Hoşgeldin, {session?.user?.name || 'Admin'}
+            </h2>
+            <p className="text-slate-500 mt-1">
+              İşletmenizin genel performans özetini aşağıda bulabilirsiniz.
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="hidden md:flex text-sm text-slate-500 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm">
+              <Calendar className="h-4 w-4 mr-2" />
+              <span>Bugün: {today}</span>
+            </div>
+            <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm shadow-blue-500/30">
+              <Download className="h-4 w-4" />
+              <span>Rapor Oluştur</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {/* Stat Card 1 - Toplam Satış */}
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex justify-between items-start mb-4">
+              <div className="p-2 bg-blue-50 rounded-lg text-blue-600">
+                <DollarSign className="h-5 w-5" />
+              </div>
+              <span className="flex items-center text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+                <TrendingUp className="h-3 w-3 mr-1" />
+                +%12
+              </span>
+            </div>
             <div>
-              <h2 className="text-2xl font-bold mb-2">
-                Hoş geldiniz, {session?.user?.name}! 👋
-              </h2>
-              <p className="text-blue-100 mb-4">
-                Bugün sisteminizde {stats.totalProducts} ürün, {stats.totalOrders} sipariş ve {stats.totalCustomers} müşteri bulunmaktadır.
-              </p>
-              <div className="flex items-center space-x-6 text-sm">
-                <div className="flex items-center">
-                  <Activity className="h-4 w-4 mr-2" />
-                  <span>{stats.activeVisitors} aktif ziyaretçi</span>
-                </div>
-                <div className="flex items-center">
-                  <Clock className="h-4 w-4 mr-2" />
-                  <span>{stats.pendingOrders} bekleyen sipariş</span>
-                </div>
-                <div className="flex items-center">
-                  <AlertTriangle className="h-4 w-4 mr-2" />
-                  <span>{stats.lowStockProducts} düşük stok</span>
-                </div>
+              <p className="text-slate-500 text-sm font-medium mb-1">Toplam Satış</p>
+              <h3 className="text-2xl font-bold text-slate-900">
+                ₺{stats.totalRevenue.toLocaleString()}
+              </h3>
+            </div>
+          </div>
+
+          {/* Stat Card 2 - Yeni Siparişler */}
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex justify-between items-start mb-4">
+              <div className="p-2 bg-indigo-50 rounded-lg text-indigo-600">
+                <ShoppingCart className="h-5 w-5" />
+              </div>
+              <span className="flex items-center text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+                <TrendingUp className="h-3 w-3 mr-1" />
+                +%5
+              </span>
+            </div>
+            <div>
+              <p className="text-slate-500 text-sm font-medium mb-1">Yeni Siparişler</p>
+              <h3 className="text-2xl font-bold text-slate-900">
+                {stats.totalOrders}
+              </h3>
+            </div>
+          </div>
+
+          {/* Stat Card 3 - Ziyaretçiler */}
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex justify-between items-start mb-4">
+              <div className="p-2 bg-orange-50 rounded-lg text-orange-600">
+                <Users className="h-5 w-5" />
+              </div>
+              <span className="flex items-center text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-full">
+                <TrendingDown className="h-3 w-3 mr-1" />
+                -%2
+              </span>
+            </div>
+            <div>
+              <p className="text-slate-500 text-sm font-medium mb-1">Ziyaretçiler</p>
+              <h3 className="text-2xl font-bold text-slate-900">
+                {stats.activeVisitors.toLocaleString()}
+              </h3>
+            </div>
+          </div>
+
+          {/* Stat Card 4 - Dönüşüm Oranı */}
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex justify-between items-start mb-4">
+              <div className="p-2 bg-purple-50 rounded-lg text-purple-600">
+                <Percent className="h-5 w-5" />
+              </div>
+              <span className="flex items-center text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+                <TrendingUp className="h-3 w-3 mr-1" />
+                +%0.5
+              </span>
+            </div>
+            <div>
+              <p className="text-slate-500 text-sm font-medium mb-1">Dönüşüm Oranı</p>
+              <h3 className="text-2xl font-bold text-slate-900">
+                %{stats.conversionRate}
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        {/* Charts Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          {/* Main Chart */}
+          <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-lg font-bold text-slate-900">Satış Performansı</h3>
+                <p className="text-sm text-slate-500">Son 30 günlük gelir grafiği</p>
+              </div>
+              <div className="flex bg-slate-100 p-1 rounded-lg">
+                <button className="px-3 py-1 text-xs font-medium rounded-md bg-white text-slate-900 shadow-sm">
+                  Haftalık
+                </button>
+                <button className="px-3 py-1 text-xs font-medium rounded-md text-slate-500 hover:text-slate-900">
+                  Aylık
+                </button>
+                <button className="px-3 py-1 text-xs font-medium rounded-md text-slate-500 hover:text-slate-900">
+                  Yıllık
+                </button>
               </div>
             </div>
-            <div className="hidden md:block">
-              <div className="bg-white bg-opacity-20 rounded-lg p-4">
-                <div className="text-3xl text-black font-bold">₺{stats.monthlyRevenue.toLocaleString()}</div>
-                <div className="text-blue-500 text-sm">Bu ayki gelir</div>
+            {/* SVG Chart Visualization */}
+            <div className="relative h-64 w-full">
+              <svg className="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 500 150">
+                {/* Grid Lines */}
+                <line stroke="#e2e8f0" strokeWidth="1" x1="0" x2="500" y1="150" y2="150" />
+                <line stroke="#e2e8f0" strokeDasharray="4 4" strokeWidth="1" x1="0" x2="500" y1="100" y2="100" />
+                <line stroke="#e2e8f0" strokeDasharray="4 4" strokeWidth="1" x1="0" x2="500" y1="50" y2="50" />
+                <line stroke="#e2e8f0" strokeDasharray="4 4" strokeWidth="1" x1="0" x2="500" y1="0" y2="0" />
+                {/* Area Gradient Definition */}
+                <defs>
+                  <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stopColor="#137fec" stopOpacity="0.2" />
+                    <stop offset="100%" stopColor="#137fec" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                {/* Area Path */}
+                <path
+                  d="M0 100 C 50 100, 50 40, 100 40 C 150 40, 150 80, 200 80 C 250 80, 250 20, 300 20 C 350 20, 350 60, 400 60 C 450 60, 450 30, 500 30 V 150 H 0 Z"
+                  fill="url(#chartGradient)"
+                />
+                {/* Line Path */}
+                <path
+                  d="M0 100 C 50 100, 50 40, 100 40 C 150 40, 150 80, 200 80 C 250 80, 250 20, 300 20 C 350 20, 350 60, 400 60 C 450 60, 450 30, 500 30"
+                  fill="none"
+                  stroke="#137fec"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="3"
+                />
+                {/* Tooltip Indicator */}
+                <circle cx="300" cy="20" fill="#ffffff" r="5" stroke="#137fec" strokeWidth="3" />
+                <g transform="translate(280, -25)">
+                  <rect fill="#1e293b" height="24" rx="4" width="40" />
+                  <text fill="white" fontSize="10" fontWeight="bold" textAnchor="middle" x="20" y="16">
+                    ₺12K
+                  </text>
+                </g>
+              </svg>
+            </div>
+            {/* X Axis Labels */}
+            <div className="flex justify-between mt-4 text-xs text-slate-400 font-medium px-1">
+              <span>Pzt</span>
+              <span>Sal</span>
+              <span>Çar</span>
+              <span>Per</span>
+              <span>Cum</span>
+              <span>Cmt</span>
+              <span>Paz</span>
+            </div>
+          </div>
+
+          {/* Secondary Chart (Visitor Sources) */}
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 flex flex-col">
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Ziyaretçi Kaynakları</h3>
+            <p className="text-sm text-slate-500 mb-6">Trafik kaynakları dağılımı</p>
+            <div className="flex-1 flex flex-col justify-center gap-6">
+              {/* Source 1 */}
+              <div className="group">
+                <div className="flex justify-between items-end mb-1">
+                  <span className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+                    Sosyal Medya
+                  </span>
+                  <span className="text-sm font-bold text-slate-900">45%</span>
+                </div>
+                <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                  <div className="bg-blue-600 h-2 rounded-full" style={{ width: '45%' }}></div>
+                </div>
+              </div>
+              {/* Source 2 */}
+              <div className="group">
+                <div className="flex justify-between items-end mb-1">
+                  <span className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-cyan-500"></span>
+                    Organik Arama
+                  </span>
+                  <span className="text-sm font-bold text-slate-900">32%</span>
+                </div>
+                <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                  <div className="bg-cyan-500 h-2 rounded-full" style={{ width: '32%' }}></div>
+                </div>
+              </div>
+              {/* Source 3 */}
+              <div className="group">
+                <div className="flex justify-between items-end mb-1">
+                  <span className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+                    Direkt Trafik
+                  </span>
+                  <span className="text-sm font-bold text-slate-900">23%</span>
+                </div>
+                <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                  <div className="bg-indigo-500 h-2 rounded-full" style={{ width: '23%' }}></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* KPI Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {kpiCards.map((card, index) => {
-            const Icon = card.icon;
-            return (
-              <div key={index} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`p-3 rounded-lg ${card.color}`}>
-                    <Icon className="h-6 w-6 text-white" />
-                  </div>
-                  <div className="text-right">
-                    <div className={`text-sm font-medium ${
-                      card.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
-                    }`}>
-                      {card.change}
-                    </div>
-                    <div className="text-xs text-gray-500">{card.period}</div>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-gray-600 mb-1">{card.title}</p>
-                  <p className="text-2xl font-bold text-gray-900">{card.value}</p>
-                </div>
-                {/* Mini trend chart placeholder */}
-                <div className="mt-4 h-8 bg-gray-100 rounded flex items-end space-x-1">
-                  {card.trend.map((value, i) => (
-                    <div
-                      key={i}
-                      className="bg-blue-500 rounded-t"
-                      style={{ 
-                        height: `${(value / Math.max(...card.trend)) * 100}%`,
-                        width: '8px'
-                      }}
-                    />
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Alerts & Quick Actions */}
+        {/* Bottom Section: Recent Orders & Top Products */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Alerts */}
-          <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                  <Bell className="h-5 w-5 mr-2 text-orange-500" />
-                  Sistem Uyarıları
-                </h3>
-                <button className="text-sm text-blue-600 hover:text-blue-700">
-                  Tümünü Gör
-                </button>
-              </div>
-            </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                {stats.alerts.map((alert) => (
-                  <div key={alert.id} className={`p-4 rounded-lg border-l-4 ${
-                    alert.type === 'warning' ? 'bg-yellow-50 border-yellow-400' :
-                    alert.type === 'error' ? 'bg-red-50 border-red-400' :
-                    alert.type === 'info' ? 'bg-blue-50 border-blue-400' :
-                    'bg-green-50 border-green-400'
-                  }`}>
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0">
-                        {alert.type === 'warning' && <AlertTriangle className="h-5 w-5 text-yellow-600" />}
-                        {alert.type === 'error' && <XCircle className="h-5 w-5 text-red-600" />}
-                        {alert.type === 'info' && <Activity className="h-5 w-5 text-blue-600" />}
-                        {alert.type === 'success' && <CheckCircle className="h-5 w-5 text-green-600" />}
-                      </div>
-                      <div className="ml-3 flex-1">
-                        <h4 className="text-sm font-medium text-gray-900">{alert.title}</h4>
-                        <p className="text-sm text-gray-600 mt-1">{alert.message}</p>
-                        <p className="text-xs text-gray-500 mt-2">{alert.timestamp}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Actions */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900">Hızlı İşlemler</h3>
-            </div>
-            <div className="p-6 space-y-3">
-              <button className="w-full flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                <Plus className="h-5 w-5 text-blue-600 mr-3" />
-                <div className="text-left">
-                  <p className="font-medium text-gray-900">Yeni Ürün Ekle</p>
-                  <p className="text-sm text-gray-500">Ürün kataloğuna yeni ürün ekleyin</p>
-                </div>
-              </button>
-              <button className="w-full flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                <Zap className="h-5 w-5 text-green-600 mr-3" />
-                <div className="text-left">
-                  <p className="font-medium text-gray-900">Kampanya Başlat</p>
-                  <p className="text-sm text-gray-500">Yeni pazarlama kampanyası oluşturun</p>
-                </div>
-              </button>
-              <button className="w-full flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                <ShoppingCart className="h-5 w-5 text-purple-600 mr-3" />
-                <div className="text-left">
-                  <p className="font-medium text-gray-900">Sipariş Oluştur</p>
-                  <p className="text-sm text-gray-500">Manuel sipariş girişi yapın</p>
-                </div>
-              </button>
-              <button className="w-full flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                <Download className="h-5 w-5 text-orange-600 mr-3" />
-                <div className="text-left">
-                  <p className="font-medium text-gray-900">Rapor İndir</p>
-                  <p className="text-sm text-gray-500">Aylık satış raporunu indirin</p>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Recent Orders & Activity */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Recent Orders */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-gray-900">Son Siparişler</h3>
-                <button className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center">
-                  Tümünü Gör
-                  <ArrowRight className="h-4 w-4 ml-1" />
-                </button>
-              </div>
+          {/* Recent Orders Table */}
+          <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+            <div className="p-6 border-b border-slate-100 flex justify-between items-center">
+              <h3 className="text-lg font-bold text-slate-900">Son Siparişler</h3>
+              <Link href="/admin/orders" className="text-sm text-blue-600 font-medium hover:underline">
+                Tümünü Gör
+              </Link>
             </div>
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-slate-50 text-slate-500 font-medium">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Sipariş
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Müşteri
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Tutar
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Durum
-                    </th>
+                    <th className="px-6 py-4">Sipariş No</th>
+                    <th className="px-6 py-4">Müşteri</th>
+                    <th className="px-6 py-4">Tarih</th>
+                    <th className="px-6 py-4">Tutar</th>
+                    <th className="px-6 py-4">Durum</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {stats.recentOrders.slice(0, 5).map((order) => (
-                    <tr key={order.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">#{order.orderNumber}</div>
-                          <div className="text-sm text-gray-500">
-                            {new Date(order.createdAt).toLocaleDateString('tr-TR')}
-                          </div>
-                        </div>
+                <tbody className="divide-y divide-slate-100">
+                  {stats.recentOrders.slice(0, 4).map((order) => (
+                    <tr key={order.id} className="hover:bg-slate-50 transition-colors">
+                      <td className="px-6 py-4 font-medium text-slate-900">
+                        #{order.orderNumber}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <td className="px-6 py-4 text-slate-600">
                         {order.customerName}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      <td className="px-6 py-4 text-slate-500">
+                        {formatTimeAgo(order.createdAt)}
+                      </td>
+                      <td className="px-6 py-4 text-slate-900 font-medium">
                         ₺{order.total.toLocaleString()}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(order.status)}`}>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${getStatusColor(order.status)}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${
+                            order.status === 'delivered' ? 'bg-emerald-500' :
+                            order.status === 'pending' || order.status === 'processing' ? 'bg-amber-500' :
+                            order.status === 'cancelled' ? 'bg-red-500' : 'bg-blue-500'
+                          }`}></span>
                           {getStatusText(order.status)}
                         </span>
                       </td>
@@ -442,47 +424,78 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* System Health */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <h3 className="text-lg font-semibold text-gray-900">Sistem Durumu</h3>
+          {/* Top Products Widget */}
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 flex flex-col">
+            <h3 className="text-lg font-bold text-slate-900 mb-4">En Çok Satanlar</h3>
+            <div className="flex flex-col gap-4">
+              {/* Product items would go here - using placeholder for now */}
+              <div className="flex items-center gap-4 group">
+                <div className="h-12 w-12 rounded-lg bg-slate-100 bg-cover bg-center shrink-0 border border-slate-200 flex items-center justify-center">
+                  <Package className="h-6 w-6 text-slate-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-slate-900 truncate group-hover:text-blue-600 transition-colors">
+                    Örnek Ürün 1
+                  </p>
+                  <p className="text-xs text-slate-500 truncate">Kategori</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-bold text-slate-900">₺1,250</p>
+                  <p className="text-xs text-emerald-600 font-medium">85 Satış</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 group">
+                <div className="h-12 w-12 rounded-lg bg-slate-100 bg-cover bg-center shrink-0 border border-slate-200 flex items-center justify-center">
+                  <Package className="h-6 w-6 text-slate-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-slate-900 truncate group-hover:text-blue-600 transition-colors">
+                    Örnek Ürün 2
+                  </p>
+                  <p className="text-xs text-slate-500 truncate">Kategori</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-bold text-slate-900">₺890</p>
+                  <p className="text-xs text-emerald-600 font-medium">62 Satış</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 group">
+                <div className="h-12 w-12 rounded-lg bg-slate-100 bg-cover bg-center shrink-0 border border-slate-200 flex items-center justify-center">
+                  <Package className="h-6 w-6 text-slate-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-slate-900 truncate group-hover:text-blue-600 transition-colors">
+                    Örnek Ürün 3
+                  </p>
+                  <p className="text-xs text-slate-500 truncate">Kategori</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-bold text-slate-900">₺1,250</p>
+                  <p className="text-xs text-emerald-600 font-medium">41 Satış</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 group">
+                <div className="h-12 w-12 rounded-lg bg-slate-100 bg-cover bg-center shrink-0 border border-slate-200 flex items-center justify-center">
+                  <Package className="h-6 w-6 text-slate-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-slate-900 truncate group-hover:text-blue-600 transition-colors">
+                    Örnek Ürün 4
+                  </p>
+                  <p className="text-xs text-slate-500 truncate">Kategori</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-sm font-bold text-slate-900">₺320</p>
+                  <p className="text-xs text-emerald-600 font-medium">38 Satış</p>
+                </div>
+              </div>
             </div>
-            <div className="p-6 space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                  <span className="text-sm font-medium text-gray-900">Veritabanı</span>
-                </div>
-                <span className="text-sm text-green-600">Çevrimiçi</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                  <span className="text-sm font-medium text-gray-900">Ödeme Sistemi</span>
-                </div>
-                <span className="text-sm text-green-600">Aktif</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
-                  <span className="text-sm font-medium text-gray-900">Kargo Entegrasyonu</span>
-                </div>
-                <span className="text-sm text-green-600">Bağlı</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <AlertTriangle className="h-5 w-5 text-yellow-500 mr-3" />
-                  <span className="text-sm font-medium text-gray-900">Pazaryeri Sync</span>
-                </div>
-                <span className="text-sm text-yellow-600">3 Hata</span>
-              </div>
-              <div className="pt-4 border-t border-gray-200">
-                <button className="w-full flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  Sistem Durumunu Yenile
-                </button>
-              </div>
-            </div>
+            <Link
+              href="/admin/products"
+              className="mt-auto w-full py-2.5 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors text-center"
+            >
+              Tüm Ürünleri Gör
+            </Link>
           </div>
         </div>
       </div>

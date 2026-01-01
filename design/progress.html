@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kodmis Panel - Hızlı İşlemler</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-900 dark:text-white min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<div class="sticky top-0 z-50 bg-white dark:bg-[#1a2634] border-b border-[#e7edf3] dark:border-gray-800">
+<div class="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+<header class="flex items-center justify-between h-16 gap-4">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 cursor-pointer">
+<div class="size-8 rounded bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">dataset</span>
+</div>
+<h2 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-tight hidden sm:block">Kodmis Panel</h2>
+</div>
+<div class="hidden md:flex flex-col min-w-40 h-10 w-64">
+<div class="flex w-full h-full items-center rounded-lg bg-[#e7edf3] dark:bg-gray-700/50 overflow-hidden focus-within:ring-2 focus-within:ring-primary/50 transition-all">
+<div class="pl-3 pr-2 text-gray-400 dark:text-gray-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full bg-transparent border-none text-sm text-gray-900 dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-0 h-full py-0" placeholder="Arama yap..."/>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 sm:gap-8">
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-primary transition-colors" href="#">Ürünler</a>
+<a class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-primary transition-colors" href="#">Siparişler</a>
+<a class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-primary transition-colors" href="#">Müşteriler</a>
+</nav>
+<div class="flex items-center gap-3 border-l border-gray-200 dark:border-gray-700 pl-4 sm:pl-8">
+<button class="relative text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 size-2 bg-red-500 rounded-full border-2 border-white dark:border-[#1a2634]"></span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 ring-2 ring-gray-100 dark:ring-gray-700 cursor-pointer" data-alt="User profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAQXlERTMN-BV55suJS-X6xTSyljylN9c1Qq2_lRFl0j83vKi46xSI5FZlJJBHTHAPCmyX5nBambsnM88bj2fbvOHyEhsaULoG8NTQgFjCx6d8S7qIcxuYec0RG6NocpHWRfkR_HLVhcGB4cbLjn05O-wetuevX_eYfQK6zh0cpqGAtCB1QdKX3poChJo2IJ8iO9dbWKJgZ8orUCl1XYJtnluy-gQQfrsUKfayipia1E4o1AO6IsK4EkdpgAoOus5bk4EpJQQSlfWUH");'></div>
+</div>
+</div>
+</header>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Quick Actions Section -->
+<section class="mb-10">
+<div class="flex items-center justify-between mb-6 px-1">
+<h1 class="text-2xl sm:text-[32px] font-bold text-gray-900 dark:text-white tracking-tight">Hızlı İşlemler</h1>
+<button class="text-sm font-medium text-primary hover:text-primary/80 flex items-center gap-1">
+                    Düzenle <span class="material-symbols-outlined text-base">edit</span>
+</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Action Card 1 -->
+<div class="group relative flex flex-col gap-4 p-5 bg-white dark:bg-[#1a2634] rounded-xl border border-gray-200 dark:border-gray-800 hover:border-primary dark:hover:border-primary hover:shadow-lg transition-all cursor-pointer">
+<div class="size-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-[28px]">add_box</span>
+</div>
+<div>
+<h3 class="text-base font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-primary transition-colors">Yeni Ürün Ekle</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Envantere hızlıca yeni ürün girişi yapın.</p>
+</div>
+<div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-gray-400">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+<!-- Action Card 2 -->
+<div class="group relative flex flex-col gap-4 p-5 bg-white dark:bg-[#1a2634] rounded-xl border border-gray-200 dark:border-gray-800 hover:border-primary dark:hover:border-primary hover:shadow-lg transition-all cursor-pointer">
+<div class="size-12 rounded-lg bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-[28px]">shopping_cart_checkout</span>
+</div>
+<div>
+<h3 class="text-base font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Sipariş Oluştur</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Müşteri adına manuel sipariş kaydı açın.</p>
+</div>
+<div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-gray-400">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+<!-- Action Card 3 -->
+<div class="group relative flex flex-col gap-4 p-5 bg-white dark:bg-[#1a2634] rounded-xl border border-gray-200 dark:border-gray-800 hover:border-primary dark:hover:border-primary hover:shadow-lg transition-all cursor-pointer">
+<div class="size-12 rounded-lg bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-600 dark:text-orange-400 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-[28px]">campaign</span>
+</div>
+<div>
+<h3 class="text-base font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">Kampanya Başlat</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Yeni bir indirim veya promosyon kurgulayın.</p>
+</div>
+<div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-gray-400">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+<!-- Action Card 4 -->
+<div class="group relative flex flex-col gap-4 p-5 bg-white dark:bg-[#1a2634] rounded-xl border border-gray-200 dark:border-gray-800 hover:border-primary dark:hover:border-primary hover:shadow-lg transition-all cursor-pointer">
+<div class="size-12 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-[28px]">inventory_2</span>
+</div>
+<div>
+<h3 class="text-base font-semibold text-gray-900 dark:text-white mb-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">Stok Güncelle</h3>
+<p class="text-sm text-gray-500 dark:text-gray-400">Toplu stok sayımı veya düzenlemesi yapın.</p>
+</div>
+<div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity text-gray-400">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Notifications Section -->
+<section>
+<div class="flex items-center justify-between mb-5 px-1 pt-4">
+<h2 class="text-xl sm:text-[28px] font-bold text-gray-900 dark:text-white tracking-tight">Bildirimler &amp; Uyarılar</h2>
+<a class="text-sm font-medium text-primary hover:underline" href="#">Tümünü Gör</a>
+</div>
+<div class="w-full bg-white dark:bg-[#1a2634] rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 w-32">Durum</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 min-w-[300px]">Mesaj</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 w-40 whitespace-nowrap">Zaman</th>
+<th class="py-4 px-6 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 w-32 text-right">İşlem</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+<!-- Notification Row 1 (Critical) -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400 border border-red-200 dark:border-red-500/20">
+<span class="size-1.5 rounded-full bg-red-600 dark:bg-red-400 animate-pulse"></span>
+                                        Kritik
+                                    </span>
+</td>
+<td class="py-4 px-6">
+<p class="text-sm text-gray-900 dark:text-white font-medium">Stok Uyarısı: 'X Ürünü' kritik seviyede</p>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Stokta sadece son 3 adet kaldı. Tedarik süreci başlatılmalı.</p>
+</td>
+<td class="py-4 px-6 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                    10 dk önce
+                                </td>
+<td class="py-4 px-6 text-right">
+<button class="text-sm font-semibold text-primary hover:text-primary/80 dark:text-primary dark:hover:text-primary/70 transition-colors">
+                                        İncele
+                                    </button>
+</td>
+</tr>
+<!-- Notification Row 2 (Info) -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 border border-blue-200 dark:border-blue-500/20">
+<span class="size-1.5 rounded-full bg-blue-600 dark:bg-blue-400"></span>
+                                        Bilgi
+                                    </span>
+</td>
+<td class="py-4 px-6">
+<p class="text-sm text-gray-900 dark:text-white font-medium">Yeni Sipariş: #12345 nolu sipariş onay bekliyor</p>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Ahmet Yılmaz tarafından oluşturulan 1.250 TL değerinde sipariş.</p>
+</td>
+<td class="py-4 px-6 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                    35 dk önce
+                                </td>
+<td class="py-4 px-6 text-right">
+<button class="text-sm font-semibold text-primary hover:text-primary/80 dark:text-primary dark:hover:text-primary/70 transition-colors">
+                                        Görüntüle
+                                    </button>
+</td>
+</tr>
+<!-- Notification Row 3 (Success) -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group">
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400 border border-green-200 dark:border-green-500/20">
+<span class="material-symbols-outlined text-[14px]">check</span>
+                                        Başarılı
+                                    </span>
+</td>
+<td class="py-4 px-6">
+<p class="text-sm text-gray-900 dark:text-white font-medium">Kampanya 'Yaz İndirimi' başarıyla yayınlandı</p>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Kampanya tüm müşteriler için aktif duruma getirildi.</p>
+</td>
+<td class="py-4 px-6 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                    2 saat önce
+                                </td>
+<td class="py-4 px-6 text-right">
+<button class="text-sm font-semibold text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors">
+                                        Kapat
+                                    </button>
+</td>
+</tr>
+<!-- Notification Row 4 (System) -->
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors group border-b-0">
+<td class="py-4 px-6">
+<span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-600">
+<span class="material-symbols-outlined text-[14px]">settings</span>
+                                        Sistem
+                                    </span>
+</td>
+<td class="py-4 px-6">
+<p class="text-sm text-gray-900 dark:text-white font-medium">Haftalık Rapor Hazır</p>
+<p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Geçen haftanın performans raporu indirilebilir durumda.</p>
+</td>
+<td class="py-4 px-6 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                                    5 saat önce
+                                </td>
+<td class="py-4 px-6 text-right">
+<button class="text-sm font-semibold text-primary hover:text-primary/80 dark:text-primary dark:hover:text-primary/70 transition-colors">
+                                        İndir
+                                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footer for Table -->
+<div class="px-6 py-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/30 flex items-center justify-center sm:justify-end">
+<p class="text-xs text-gray-500 dark:text-gray-400">Son güncelleme: 1 dakika önce</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Optional Background Pattern for subtle texture -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.015] dark:opacity-[0.03]" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23000000\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E'); z-index: -1;">
+</div>
+</body></html>
