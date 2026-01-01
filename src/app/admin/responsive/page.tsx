@@ -87,7 +87,6 @@ import {
   Medal,
   Badge,
   Tag,
-  Label,
   Ticket,
   Gift,
   Present,

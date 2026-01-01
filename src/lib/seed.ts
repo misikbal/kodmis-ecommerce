@@ -317,18 +317,26 @@ async function seedDatabase() {
     console.log('   Manager: manager@kodmis.com / manager123');
     console.log('   Customer: customer1@kodmis.com / customer123');
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Error seeding database:', error);
     
+    // Type guard for error object
+    const isErrorWithCode = (err: unknown): err is { code: string | number } => {
+      return err !== null && typeof err === 'object' && 'code' in err;
+    };
+    
+    const isErrorWithName = (err: unknown): err is { name: string; [key: string]: unknown } => {
+      return err !== null && typeof err === 'object' && 'name' in err;
+    };
+    
     // Daha detaylı hata mesajları
-    if (error.code === 'ENOTFOUND') {
-
+    if (isErrorWithCode(error) && error.code === 'ENOTFOUND') {
       console.error('\n🔍 MongoDB Bağlantı Hatası (DNS):');
       console.error('   - İnternet bağlantınızı kontrol edin');
       console.error('   - MongoDB Atlas cluster\'ınızın aktif olduğundan emin olun');
       console.error('   - MongoDB URI\'nizin doğru olduğundan emin olun');
       console.error(`   - Mevcut URI: ${process.env.MONGODB_URI?.substring(0, 50)}...`);
-    } else if (error.name === 'MongooseServerSelectionError' || error.reason?.type === 'ReplicaSetNoPrimary') {
+    } else if (isErrorWithName(error) && error.name === 'MongooseServerSelectionError') {
       console.error('\n🔍 MongoDB Replica Set Bağlantı Hatası:');
       console.error('   ⚠️  Primary server bulunamadı veya timeout oldu');
       console.error('\n   Çözüm önerileri:');
@@ -338,19 +346,27 @@ async function seedDatabase() {
       console.error('   2. MongoDB Atlas cluster\'ının aktif olduğundan emin olun');
       console.error('   3. Firewall veya VPN engelleyip engellemediğini kontrol edin');
       console.error('   4. İnternet bağlantınızı test edin');
-      if (error.reason?.servers) {
-        console.error(`\n   Bağlanmaya çalışılan sunucular: ${Array.from(error.reason.servers.keys()).join(', ')}`);
+      if (error.reason && typeof error.reason === 'object' && 'servers' in error.reason) {
+        const reason = error.reason as { servers?: Map<string, unknown> };
+        if (reason.servers) {
+          console.error(`\n   Bağlanmaya çalışılan sunucular: ${Array.from(reason.servers.keys()).join(', ')}`);
+        }
       }
-    } else if (error.name === 'MongoServerError') {
+    } else if (isErrorWithName(error) && isErrorWithCode(error) && error.name === 'MongoServerError') {
       console.error('\n🔍 MongoDB Sunucu Hatası:');
       console.error(`   - Hata kodu: ${error.code}`);
-      console.error(`   - Mesaj: ${error.message}`);
+      console.error(`   - Mesaj: ${'message' in error ? error.message : 'Bilinmeyen'}`);
     } else {
       console.error('\n🔍 Hata Detayları:');
-      console.error(`   - Tip: ${error.name || 'Bilinmeyen'}`);
-      console.error(`   - Mesaj: ${error.message || error}`);
-      if (error.reason) {
-        console.error(`   - Replica Set Tipi: ${error.reason.type || 'Bilinmeyen'}`);
+      if (isErrorWithName(error)) {
+        console.error(`   - Tip: ${error.name || 'Bilinmeyen'}`);
+        console.error(`   - Mesaj: ${'message' in error ? String(error.message) : String(error)}`);
+        if (error.reason && typeof error.reason === 'object' && 'type' in error.reason) {
+          console.error(`   - Replica Set Tipi: ${String(error.reason.type) || 'Bilinmeyen'}`);
+        }
+      } else {
+        console.error(`   - Tip: Bilinmeyen`);
+        console.error(`   - Mesaj: ${String(error)}`);
       }
     }
     
