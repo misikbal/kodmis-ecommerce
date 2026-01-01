@@ -27,7 +27,45 @@ import {
   CreditCard,
   X
 } from 'lucide-react';
-import { MarketplaceOrder } from '@/lib/models/Marketplace';
+
+interface MarketplaceProduct {
+  id: string;
+  productId: string;
+  name: string;
+  sku: string;
+  quantity: number;
+  price: number;
+  totalPrice: number;
+  imageUrl: string;
+}
+
+interface MarketplaceAddress {
+  firstName: string;
+  lastName: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+  phone: string;
+}
+
+interface MarketplaceOrder {
+  id: string;
+  marketplaceId: string;
+  marketplaceName: string;
+  orderNumber: string;
+  customerName: string;
+  customerEmail: string;
+  products: MarketplaceProduct[];
+  totalAmount: number;
+  status: 'PENDING' | 'CONFIRMED' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
+  shippingAddress: MarketplaceAddress;
+  billingAddress: MarketplaceAddress;
+  createdAt: string;
+  updatedAt: string;
+}
 
 interface OrderManagementInterfaceProps {
   marketplaceId?: string;
@@ -500,7 +538,7 @@ export default function OrderManagementInterface({
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
-                      {order.products.slice(0, 2).map((product, index) => (
+                      {order.products.slice(0, 2).map((product: MarketplaceProduct, index: number) => (
                         <div key={index} className="flex items-center space-x-2">
                           <img
                             src={product.imageUrl}
@@ -637,7 +675,7 @@ export default function OrderManagementInterface({
                 <h4 className="text-md font-semibold text-gray-900 mb-4">Ürünler</h4>
                 <div className="bg-gray-50 rounded-lg p-4">
                   <div className="space-y-4">
-                    {selectedOrder.products.map((product) => (
+                    {selectedOrder.products.map((product: MarketplaceProduct) => (
                       <div key={product.id} className="flex items-center space-x-4 p-3 bg-white rounded-lg">
                         <img
                           src={product.imageUrl}

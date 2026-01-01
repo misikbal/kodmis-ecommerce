@@ -1127,7 +1127,7 @@ export default function NewProduct() {
                         {/* Filtrelenmiş Kategoriler */}
                         {(() => {
                           // Arama ve filtreleme
-                          let filteredCategories = availableCategories.filter(cat => {
+                          const filteredCategories = availableCategories.filter(cat => {
                             const matchesSearch = cat.name.toLowerCase().includes(categorySearchTerm.toLowerCase());
                             const matchesFilter = 
                               categoryFilter === 'all' ? true :

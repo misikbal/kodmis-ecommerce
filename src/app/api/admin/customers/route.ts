@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     const segment = searchParams.get('segment');
 
     // Fetch customers from database
-    let query: any = {};
+    const query: any = {};
     
     if (status) {
       query.isActive = status === 'ACTIVE';

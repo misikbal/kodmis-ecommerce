@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import AdminSidebar from '@/components/admin/AdminSidebar';
 import { 
   Menu, 
   X, 
@@ -111,10 +111,8 @@ export function ResponsiveLayout({ children, title, description }: ResponsiveLay
           : sidebarCollapsed ? '-translate-x-full lg:translate-x-0' : 'translate-x-0'
       } ${isMobile ? 'w-64' : sidebarCollapsed ? 'w-16' : 'w-64'}`}>
         <AdminSidebar
-          collapsed={sidebarCollapsed}
-          onCollapse={setSidebarCollapsed}
-          isMobile={isMobile}
-          onMobileMenuClose={closeMobileMenu}
+          isCollapsed={sidebarCollapsed}
+          onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
         />
       </div>
 

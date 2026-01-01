@@ -26,12 +26,19 @@ const eslintConfig = [
       "@typescript-eslint/no-explicit-any": "warn",
       "react/no-unescaped-entities": "warn",
       "prefer-const": "warn",
+      // Import'lar için daha esnek kurallar
+      "no-unused-vars": "off", // TypeScript versiyonunu kullan
       "@typescript-eslint/no-unused-vars": [
         "warn",
         {
           "argsIgnorePattern": "^_",
           "varsIgnorePattern": "^_",
-          "ignoreRestSiblings": true
+          "ignoreRestSiblings": true,
+          "caughtErrorsIgnorePattern": "^_",
+          "destructuredArrayIgnorePattern": "^_",
+          // Import'lar için daha esnek - sadece gerçekten kullanılmayan değişkenler için uyar
+          "vars": "all",
+          "args": "after-used"
         }
       ],
     },

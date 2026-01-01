@@ -94,8 +94,7 @@ export async function GET(request: NextRequest) {
         processedAt: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(),
         installmentCount: 6,
         installmentAmount: 350,
-        eInvoiceStatus: 'PENDING',
-        createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString()
+        eInvoiceStatus: 'PENDING'
       },
       {
         id: '4',
@@ -115,8 +114,7 @@ export async function GET(request: NextRequest) {
         fee: 0,
         createdAt: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
         updatedAt: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString(),
-        eInvoiceStatus: 'PENDING',
-        createdAt: new Date(Date.now() - 8 * 60 * 60 * 1000).toISOString()
+        eInvoiceStatus: 'PENDING'
       },
       {
         id: '5',
@@ -137,8 +135,7 @@ export async function GET(request: NextRequest) {
         createdAt: new Date(Date.now() - 10 * 60 * 60 * 1000).toISOString(),
         updatedAt: new Date(Date.now() - 10 * 60 * 60 * 1000).toISOString(),
         failedReason: 'Insufficient funds',
-        eInvoiceStatus: 'CANCELLED',
-        createdAt: new Date(Date.now() - 10 * 60 * 60 * 1000).toISOString()
+        eInvoiceStatus: 'CANCELLED'
       },
       {
         id: '6',

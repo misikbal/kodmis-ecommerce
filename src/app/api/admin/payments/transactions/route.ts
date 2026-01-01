@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     const endDate = searchParams.get('endDate');
 
     // Build query
-    let query: any = {};
+    const query: any = {};
     
     if (status) {
       query.status = status;

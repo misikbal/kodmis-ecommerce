@@ -14,6 +14,8 @@ interface ThemeButtonProps {
   onClick?: () => void;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
 }
 
 export default function ThemeButton({
@@ -25,7 +27,9 @@ export default function ThemeButton({
   fullWidth = false,
   onClick,
   className = '',
-  type = 'button'
+  type = 'button',
+  leftIcon,
+  rightIcon
 }: ThemeButtonProps) {
   const { currentTheme } = useTheme();
 
@@ -162,10 +166,15 @@ export default function ThemeButton({
       onMouseLeave={handleMouseLeave}
     >
       <div className="flex items-center justify-center space-x-2">
-        {loading && (
+        {loading ? (
           <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <>
+            {leftIcon && <span className="flex items-center">{leftIcon}</span>}
+            <span>{children}</span>
+            {rightIcon && <span className="flex items-center">{rightIcon}</span>}
+          </>
         )}
-        <span>{children}</span>
       </div>
     </button>
   );

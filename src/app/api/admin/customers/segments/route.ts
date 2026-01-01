@@ -86,7 +86,7 @@ export async function GET(request: NextRequest) {
     // Calculate actual customer counts for each segment
     const segmentsWithCounts = await Promise.all(
       segments.map(async (segment) => {
-        let query: any = {};
+        const query: any = {};
         
         // Parse criteria and build query
         // This is a simplified version - you can expand based on your needs

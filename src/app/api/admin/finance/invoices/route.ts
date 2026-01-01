@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
     const type = searchParams.get('type');
 
     // Build query
-    let query: any = {};
+    const query: any = {};
     
     if (status && status !== 'all') {
       query.status = status;

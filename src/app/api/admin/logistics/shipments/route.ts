@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     const carrierId = searchParams.get('carrierId');
 
     // Build query
-    let query: any = {};
+    const query: any = {};
     
     if (status) {
       query.status = status;

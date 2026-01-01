@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get('status');
 
     // Build query
-    let query: any = {};
+    const query: any = {};
     
     if (status) {
       query.status = status;

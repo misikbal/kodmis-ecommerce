@@ -136,7 +136,7 @@ export default function CategoriesPage() {
 
   // Filtreleme ve sıralama
   const getFilteredAndSortedCategories = () => {
-    let filtered = categories.filter(cat => {
+    const filtered = categories.filter(cat => {
       const matchesSearch = cat.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesFilter = 
         filterType === 'all' ? true :

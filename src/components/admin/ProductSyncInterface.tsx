@@ -23,7 +23,23 @@ import {
   EyeOff,
   X
 } from 'lucide-react';
-import { MarketplaceProduct } from '@/lib/models/Marketplace';
+
+interface MarketplaceProduct {
+  id: string;
+  name: string;
+  sku: string;
+  price: number;
+  stock: number;
+  category: string;
+  status: string;
+  marketplaceStatus: string;
+  marketplaceId: string;
+  marketplaceProductId?: string;
+  lastSyncDate?: string;
+  syncError?: string;
+  images: string[];
+  attributes: Record<string, string>;
+}
 
 interface ProductSyncInterfaceProps {
   marketplaceId: string;

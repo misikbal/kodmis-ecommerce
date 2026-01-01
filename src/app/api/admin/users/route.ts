@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     const role = searchParams.get('role') || '';
 
     // Build query
-    let query: any = {};
+    const query: any = {};
     if (role) {
       query.role = role;
     }
