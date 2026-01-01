@@ -349,9 +349,13 @@ export default function ReportsPage() {
                   Günlük Gelir Grafiği
                 </h3>
                 <div className="space-y-2">
-                  {Object.entries(reportData.revenueByDay)
+                  {Object.entries(reportData.revenueByDay || {})
                     .sort((a, b) => a[0].localeCompare(b[0]))
-                    .map(([date, amount]: [string, any]) => (
+                    .map(([date, amount]: [string, any]) => {
+                      const revenueValues = Object.values(reportData.revenueByDay || {}) as number[];
+                      const maxRevenue = revenueValues.length > 0 ? Math.max(...revenueValues) : 1;
+                      const percentage = maxRevenue > 0 ? (amount / maxRevenue) * 100 : 0;
+                      return (
                       <div key={date} className="flex items-center space-x-3">
                         <span className="text-sm text-gray-600 w-32">
                           {new Date(date).toLocaleDateString('tr-TR')}
@@ -360,10 +364,7 @@ export default function ReportsPage() {
                           <div
                             className="bg-gradient-to-r from-green-500 to-green-600 h-8 rounded-full flex items-center justify-end pr-3"
                             style={{
-                              width: `${Math.min(
-                                (amount / Math.max(...Object.values(reportData.revenueByDay))) * 100,
-                                100
-                              )}%`
+                              width: `${Math.min(percentage, 100)}%`
                             }}
                           >
                             <span className="text-xs font-medium text-white">
@@ -372,7 +373,8 @@ export default function ReportsPage() {
                           </div>
                         </div>
                       </div>
-                    ))}
+                      );
+                    })}
                 </div>
               </div>
             )}
